@@ -1,0 +1,11 @@
+node_modules/
+artifacts/
+cache/
+deployments/
+ai_model/weights/
+results.json
+hardhat-node.log
+.env
+__pycache__/
+*.pyc
+.venv/
