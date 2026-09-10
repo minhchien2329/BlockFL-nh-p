@@ -77,7 +77,27 @@ Mỗi round: 4 node `submitWeights(hash, numSamples, round)` → owner `aggregat
 `distributeReward()` mint BFL token theo `numSamples_i / totalSamples`. Cuối demo
 in số dư token từng node và ghi `results.json`.
 
-### 4. Deploy Testnet Sepolia (giai đoạn cuối)
+### 4. Dashboard giám sát (mục 9 – điểm nâng cao)
+
+Sau khi đã `hardhat node` + `deploy` + `run_demo.py`, mở dashboard:
+
+```bash
+python dashboard/serve.py
+```
+
+Trang `http://127.0.0.1:8000/dashboard/` tự mở, hiển thị real-time (làm mới mỗi 5 giây):
+
+- thẻ tổng quan: round hiện tại, số node, tổng BFL đã thưởng, accuracy mới nhất;
+- biểu đồ hội tụ accuracy / F1 qua từng round (đọc `results.json`);
+- bảng lịch sử round đọc thẳng từ smart contract (số node nộp Δw, tổng mẫu, global model hash);
+- bảng đóng góp & số dư token BFL từng node;
+- nhật ký sự kiện on-chain (`WeightsSubmitted`, `ModelAggregated`, `RewardDistributed`);
+- nút **Kết nối MetaMask** (xem số dư BFL của ví đang chọn).
+
+Dashboard chỉ đọc RPC `http://127.0.0.1:8545` nên **không cần** MetaMask để xem;
+ví chỉ dùng cho phần trình diễn kết nối Web3 ở buổi demo.
+
+### 5. Deploy Testnet Sepolia (giai đoạn cuối)
 
 ```bash
 cp .env.example .env   # điền SEPOLIA_RPC_URL, PRIVATE_KEY
@@ -103,9 +123,9 @@ python run_demo.py --network sepolia --rounds 3
 - **Tầng Blockchain (3.3):** `FederatedAggregator.sol` — `registerNode`, `submitWeights`, `aggregate`, `distributeReward`; event `WeightsSubmitted / ModelAggregated / RewardDistributed`; token ERC-20 `BlockFLToken`.
 - **Kết nối (mục 4):** `web3_interface.py` dùng Web3.py gọi contract trực tiếp từ pipeline huấn luyện.
 
-## Hướng phát triển (mục 9 – điểm nâng cao)
+## Hướng phát triển tiếp
 
-- Dashboard React + Ethers.js + MetaMask (thư mục `dashboard/` để trống sẵn).
+- Dashboard (`dashboard/`) đã có bản đọc on-chain + Ethers.js + MetaMask — có thể nâng lên React nếu cần.
 - Phát hiện node gian lận: kiểm tra Δw bất thường trước `aggregate()`.
 - Lưu trọng số lên IPFS/Pinata thay vì file local.
 - Nhúng mô hình rút gọn (TF Lite) lên ESP32/Raspberry Pi thật.
