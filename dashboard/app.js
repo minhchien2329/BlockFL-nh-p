@@ -19,6 +19,52 @@ async function loadResults() {
   } catch { return null; }
 }
 
+async function loadPreview() {
+  try {
+    const r = await fetch("../data/nodes_preview.json", { cache: "no-store" });
+    if (!r.ok) return;
+    renderPreview(await r.json());
+  } catch { /* chưa export */ }
+}
+
+function renderPreview(pv) {
+  const feats = pv.features;
+  const box = $("#data-grid");
+  box.innerHTML = pv.nodes.map((n) => {
+    const statRows = feats.map((f) => {
+      const a = n.stats_normal[f], b = n.stats_anomaly[f];
+      const fmt = (x) => (x ? `${x[0]} <span class="pm">±${x[1]}</span>` : "–");
+      return `<tr><td>${f}</td><td>${fmt(a)}</td><td>${fmt(b)}</td></tr>`;
+    }).join("");
+    const sample = n.sample_rows.map((row) =>
+      `<tr class="${row.label ? 'r-anom' : 'r-norm'}">
+        <td>${row.label ? 'bất thường' : 'bình thường'}</td>
+        ${feats.map((f) => `<td>${row[f]}</td>`).join("")}</tr>`).join("");
+    const pct = Math.round(n.anomaly_ratio * 100);
+    return `<div class="dcard">
+      <div class="dhead">
+        <b>node ${n.node_id}</b>
+        <span>${n.n_train} train · ${n.n_test} test</span>
+      </div>
+      <div class="dist">
+        <div class="dist-bar"><i class="norm" style="width:${100 - pct}%"></i><i class="anom" style="width:${pct}%"></i></div>
+        <div class="dist-lbl"><span>bình thường ${n.n_normal}</span><span>bất thường ${n.n_anomaly} (${pct}%)</span></div>
+      </div>
+      <table class="dtable">
+        <thead><tr><th>Đặc trưng</th><th>Bình thường</th><th>Bất thường</th></tr></thead>
+        <tbody>${statRows}</tbody>
+      </table>
+      <details>
+        <summary>Xem ${n.sample_rows.length} mẫu ví dụ</summary>
+        <div class="table-wrap"><table class="dtable">
+          <thead><tr><th>nhãn</th>${feats.map((f) => `<th>${f}</th>`).join("")}</tr></thead>
+          <tbody>${sample}</tbody>
+        </table></div>
+      </details>
+    </div>`;
+  }).join("");
+}
+
 function short(a) { return a ? a.slice(0, 6) + "…" + a.slice(-4) : "–"; }
 function hx(h) { return h && h !== "0x" + "0".repeat(64) ? h.slice(0, 18) + "…" : "(chưa có)"; }
 
@@ -159,6 +205,7 @@ $("#btn-wallet").addEventListener("click", async () => {
 async function boot() {
   try {
     await connect();
+    await loadPreview();
     await refresh();
     setInterval(() => refresh().catch(console.error), 5000);
   } catch (e) {

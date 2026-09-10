@@ -20,7 +20,7 @@ import numpy as np
 
 from ai_model.fedavg import fedavg, save_weights, weights_hash
 from ai_model.model import build_model, evaluate, get_flat_weights
-from iot_code.data_partition import global_test_set, partition_non_iid
+from iot_code.data_partition import export_preview, global_test_set, partition_non_iid
 from iot_code.edge_node import EdgeNode
 
 ROOT = Path(__file__).resolve().parent
@@ -47,6 +47,11 @@ def run(rounds: int, n_nodes: int, alpha: float, epochs: int, lr: float,
     if chain:
         for nd, addr in zip(nodes, chain.nodes):
             nd.address = addr
+
+    prev_path = ROOT / "data" / "nodes_preview.json"
+    prev_path.parent.mkdir(exist_ok=True)
+    prev_path.write_text(json.dumps(export_preview(parts), indent=2))
+    print(f"Du lieu mo phong tung node -> {prev_path}")
 
     Xg, yg = global_test_set(parts)
     gmodel = build_model()

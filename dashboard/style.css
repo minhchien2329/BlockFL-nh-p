@@ -72,6 +72,25 @@ td.mono, .hash { font-family: ui-monospace, Consolas, monospace; font-size: 12px
 
 #chart svg { display: block; width: 100%; max-height: 300px; }
 
+.data-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.dcard { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.dhead { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.dhead b { font-size: 15px; }
+.dhead span { color: var(--muted); font-size: 12px; }
+.dist-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; }
+.dist-bar i.norm { background: var(--green); }
+.dist-bar i.anom { background: var(--amber); }
+.dist-lbl { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; margin: 4px 0 10px; }
+table.dtable { width: 100%; border-collapse: collapse; font-size: 12px; }
+table.dtable th, table.dtable td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+table.dtable th { color: var(--muted); font-weight: 500; }
+.dtable .pm { color: var(--muted); font-size: 10px; }
+.dcard details { margin-top: 8px; }
+.dcard summary { cursor: pointer; color: var(--accent); font-size: 12px; }
+.dtable tr.r-anom td:first-child { color: var(--amber); }
+.dtable tr.r-norm td:first-child { color: var(--green); }
+@media (max-width: 720px) { .data-grid { grid-template-columns: 1fr; } }
+
 .events { display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
 .ev { display: flex; gap: 10px; align-items: baseline; font-size: 12px; padding: 6px 8px; background: var(--panel-2); border-radius: 6px; }
 .ev .t { color: var(--accent); font-weight: 600; min-width: 150px; }

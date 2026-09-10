@@ -19,6 +19,7 @@ class NodeDataset:
     y_train: np.ndarray
     X_test: np.ndarray
     y_test: np.ndarray
+    X_train_raw: np.ndarray | None = None  # gia tri cam bien goc (truoc chuan hoa)
 
     @property
     def n_samples(self) -> int:
@@ -84,11 +85,43 @@ def partition_non_iid(
 
         n_test = max(1, int(round(n_total * test_frac)))
         X_te, y_te = X[:n_test], y[:n_test]
-        X_tr, y_tr = X[n_test:], y[n_test:]
-        X_tr, X_te = _standardize(X_tr, X_te)
+        X_tr_raw, y_tr = X[n_test:], y[n_test:]
+        X_tr, X_te = _standardize(X_tr_raw, X_te)
 
-        nodes.append(NodeDataset(i, X_tr, y_tr, X_te, y_te))
+        nodes.append(NodeDataset(i, X_tr, y_tr, X_te, y_te, X_train_raw=X_tr_raw))
     return nodes
+
+
+def export_preview(nodes: list[NodeDataset], n_rows: int = 6) -> dict:
+    """Tom tat du lieu cam bien goc cua tung node (cho dashboard)."""
+    out = {"features": FEATURE_NAMES, "nodes": []}
+    for nd in nodes:
+        Xr, y = nd.X_train_raw, nd.y_train
+
+        def stats(mask):
+            sub = Xr[mask]
+            if len(sub) == 0:
+                return {f: None for f in FEATURE_NAMES}
+            return {f: [round(float(sub[:, k].mean()), 2), round(float(sub[:, k].std()), 2)]
+                    for k, f in enumerate(FEATURE_NAMES)}
+
+        idx = list(np.argsort(y)[:n_rows // 2]) + list(np.argsort(-y)[:n_rows - n_rows // 2])
+        rows = [{"label": int(y[j]),
+                 **{f: round(float(Xr[j, k]), 2) for k, f in enumerate(FEATURE_NAMES)}}
+                for j in idx]
+
+        out["nodes"].append({
+            "node_id": nd.node_id,
+            "n_train": int(len(y)),
+            "n_test": int(len(nd.y_test)),
+            "n_normal": int((y == 0).sum()),
+            "n_anomaly": int((y == 1).sum()),
+            "anomaly_ratio": round(float(y.mean()), 3),
+            "stats_normal": stats(y == 0),
+            "stats_anomaly": stats(y == 1),
+            "sample_rows": rows,
+        })
+    return out
 
 
 def global_test_set(nodes: list[NodeDataset]):
