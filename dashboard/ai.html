@@ -22,12 +22,14 @@
 
     <nav class="sidenav">
       <a href="index.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5Z"/></svg></span><span class="lbl">Tổng quan</span></a>
+      <a href="architecture.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="8.5" y="14" width="7" height="7" rx="1.5"/><path d="M6.5 10v2.5h11V10M12 12.5V14"/></svg></span><span class="lbl">Kiến trúc CPS</span></a>
       <div class="nav-group-label">Giám sát hệ thống</div>
       <a href="iot.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><span class="lbl">Dữ liệu IoT</span></a>
       <a href="ai.html" class="active"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></span><span class="lbl">Hội tụ AI</span></a>
       <a href="rounds.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg></span><span class="lbl">Round on-chain</span></a>
       <a href="rewards.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6.5"/><path d="M17 8.5A6.5 6.5 0 1 1 8.7 21.7"/></svg></span><span class="lbl">Token thưởng</span></a>
       <a href="events.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span><span class="lbl">Nhật ký sự kiện</span></a>
+      <a href="contract.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6l-4-4z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h4"/><circle cx="12" cy="10" r="0"/></svg></span><span class="lbl">Smart Contract</span></a>
     </nav>
 
     <div class="sidebar-foot">
@@ -40,32 +42,69 @@
     <header>
       <div class="brand">
         <div>
-          <h1>Hội tụ AI <span>· Tầng AI</span></h1>
+          <h1>Hội tụ AI</h1>
           <p>Độ hội tụ của Global Model qua từng round Federated Learning (FedAvg)</p>
         </div>
       </div>
       <button id="btn-wallet">Kết nối MetaMask</button>
     </header>
-
-    <section class="meta" id="meta"></section>
-
-    <section class="cards">
-      <div class="card"><div class="k">Round hiện tại</div><div class="v" id="c-round">–</div></div>
-      <div class="card"><div class="k">Số node tham gia</div><div class="v" id="c-nodes">–</div></div>
-      <div class="card"><div class="k">Tổng BFL đã thưởng</div><div class="v" id="c-token">–</div></div>
-      <div class="card"><div class="k">Độ chính xác mới nhất</div><div class="v" id="c-acc">–</div></div>
+    <section class="panel">
+      <h2>Kết quả sau 5 round học liên kết<span class="src-tag ai">Tầng AI</span></h2>
+      <p class="hint">So với global model lúc khởi tạo ngẫu nhiên (round 0) — toàn bộ mức tăng này đến từ FedAvg, không node nào gửi dữ liệu thô đi đâu cả</p>
+      <div class="delta" id="delta"></div>
     </section>
 
     <section class="panel">
       <h2>Độ hội tụ của Global Model qua từng round<span class="src-tag ai">Tầng AI</span></h2>
       <p class="hint">Nguồn: <code>results.json</code> — đánh giá trên tập test gộp của tất cả node sau mỗi vòng FedAvg</p>
       <div id="chart"></div>
-      <div class="legend">
-        <b><i style="background:#3a6fa8"></i>Accuracy</b>
-        <b><i style="background:var(--green)"></i>F1 (lớp bất thường)</b>
-      </div>
+      <div class="legend" id="chart-legend"></div>
     </section>
 
+    <section class="panel">
+      <h2>Học liên kết so với từng node tự train một mình<span class="src-tag ai">Tầng AI</span></h2>
+      <p class="hint">Mỗi local model được chấm trên <b>cùng một tập test chung</b> nên so sánh là công bằng — đường đậm là global model do FedAvg tổng hợp</p>
+      <div id="chart-local"></div>
+      <div class="legend" id="chart-local-legend"></div>
+      <p class="note" id="local-note"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Kết quả có ổn định không, hay ăn may một lần chia dữ liệu?<span class="src-tag ai">Tầng AI</span></h2>
+      <p class="hint">Chạy lại toàn bộ Federated Learning trên nhiều <b>lần chia dữ liệu khác nhau</b> (đổi seed ⇒ tỉ lệ bất thường, số mẫu và giá trị cảm biến của mọi node đều đổi), rồi đo độ tản mát</p>
+      <div class="delta" id="sweep-summary"></div>
+      <div id="chart-sweep"></div>
+      <div class="legend" id="chart-sweep-legend"></div>
+      <div class="table-wrap" style="margin-top:16px">
+        <table id="sweep-table">
+          <thead><tr><th>Seed</th><th>Global (FedAvg)</th><th>Node tốt nhất tự train</th><th>Node kém nhất tự train</th><th>Cách biệt</th><th>FedAvg thắng?</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note" id="sweep-note"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Hàm mất mát (cross-entropy loss)<span class="src-tag ai">Tầng AI</span></h2>
+      <p class="hint">Accuracy không kể hết câu chuyện — loss cho thấy model còn "chắc tay" hay đã bắt đầu học vẹt</p>
+      <div id="chart-loss"></div>
+      <div class="legend" id="chart-loss-legend"></div>
+      <p class="note" id="loss-note"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Global model phục vụ từng node tốt cỡ nào<span class="src-tag ai">Tầng AI</span></h2>
+      <p class="hint">Đo trên dữ liệu <b>riêng</b> của từng node (trước khi node đó train vòng mới) — dữ liệu lệch nhau nhưng model chung vẫn phải dùng được cho tất cả</p>
+      <div class="fair-grid" id="fairness"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Cấu hình thí nghiệm<span class="src-tag ai">Tầng AI</span></h2>
+      <p class="hint">Đọc từ <code>results.json</code> — chính là tham số đã dùng cho lần chạy đang hiển thị</p>
+      <div class="kv-grid" id="exp-config"></div>
+    </section>
+
+    <div id="meta-cards"></div>
     <footer>
       <span id="refresh-info">Tự động làm mới mỗi 5 giây</span>
     </footer>
