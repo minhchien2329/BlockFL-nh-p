@@ -93,7 +93,9 @@ body.collapsed .collapse-btn { transform: rotate(180deg); }
   padding: 11px 12px; border-radius: 9px; border: 1px solid transparent;
   white-space: nowrap; overflow: hidden; transition: background .15s, border-color .15s;
 }
-.sidenav a .ic { width: 20px; text-align: center; flex: none; font-size: 15.5px; }
+.sidenav a .ic { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex: none; opacity: .85; }
+.sidenav a .ic svg { width: 19px; height: 19px; }
+.sidenav a.active .ic, .sidenav a:hover .ic { opacity: 1; }
 .sidenav a:hover { background: var(--sidebar-bg-hover); }
 .sidenav a.active { background: var(--sidebar-bg-active); border-color: var(--mint); color: #fff; }
 
