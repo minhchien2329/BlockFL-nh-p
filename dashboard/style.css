@@ -48,7 +48,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 15.5px/1.6 "Times New Roman", Times, Georgia, serif;
+  font: 15.5px/1.6 "Be Vietnam Pro", "Segoe UI", -apple-system, Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
