@@ -188,21 +188,20 @@ function drawChart(hist, baseline) {
   const Y = (v) => PT + (1 - v / 100) * (H - PT - PB);
   const path = (arr) => arr.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join(" ");
   const dots = (arr, c) => arr.map((v, i) => `<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="3" fill="${c}"/>`).join("");
+  const cAcc = "#2f6cb3", cF1 = "#2ea373", cGrid = "#e3ecf5", cLbl = "#8fa0bd";
   const grid = [0, 25, 50, 75, 100].map((g) =>
-    `<line x1="${PL}" y1="${Y(g)}" x2="${W - PR}" y2="${Y(g)}" stroke="#2a3140"/>
-     <text x="${PL - 8}" y="${Y(g) + 4}" fill="#8b949e" font-size="11" text-anchor="end">${g}</text>`).join("");
+    `<line x1="${PL}" y1="${Y(g)}" x2="${W - PR}" y2="${Y(g)}" stroke="${cGrid}"/>
+     <text x="${PL - 8}" y="${Y(g) + 4}" fill="${cLbl}" font-size="11" text-anchor="end">${g}</text>`).join("");
   const xlabels = xs.map((x, i) =>
-    `<text x="${X(i)}" y="${H - 8}" fill="#8b949e" font-size="11" text-anchor="middle">${x}</text>`).join("");
+    `<text x="${X(i)}" y="${H - 8}" fill="${cLbl}" font-size="11" text-anchor="middle">${x}</text>`).join("");
 
   $("#chart").innerHTML = `
     <svg viewBox="0 0 ${W} ${H}" width="100%" font-family="sans-serif">
       ${grid}
-      <path d="${path(acc)}" fill="none" stroke="#4f8cff" stroke-width="2"/>
-      <path d="${path(f1)}" fill="none" stroke="#3fb950" stroke-width="2"/>
-      ${dots(acc, "#4f8cff")}${dots(f1, "#3fb950")}
+      <path d="${path(acc)}" fill="none" stroke="${cAcc}" stroke-width="2.5"/>
+      <path d="${path(f1)}" fill="none" stroke="${cF1}" stroke-width="2.5"/>
+      ${dots(acc, cAcc)}${dots(f1, cF1)}
       ${xlabels}
-      <text x="${W - PR}" y="${PT + 4}" fill="#4f8cff" font-size="12" text-anchor="end">Accuracy %</text>
-      <text x="${W - PR}" y="${PT + 20}" fill="#3fb950" font-size="12" text-anchor="end">F1 %</text>
     </svg>
     <p class="hint">Trục X = round huấn luyện (0 = model khởi tạo ngẫu nhiên)</p>`;
 }
