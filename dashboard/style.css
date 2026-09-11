@@ -108,7 +108,7 @@ body.collapsed .collapse-btn { transform: rotate(180deg); }
 
 /* ---------- Main content ---------- */
 .main {
-  --main-px: 48px;
+  --main-px: clamp(48px, 7vw, 130px);
   margin-left: var(--sidebar-w); padding: 36px var(--main-px) 0;
   transition: margin-left .18s ease;
 }
@@ -290,7 +290,7 @@ footer {
   .sidebar-foot { border-top: none; padding-top: 0; margin-top: 0; margin-left: auto; flex: none; }
   #conn-text { display: none; }
   .collapse-btn { display: none; }
-  .main { margin-left: 0 !important; padding: 16px; }
+  .main { --main-px: 16px; margin-left: 0 !important; padding: 16px; }
 }
 
 @media (max-width: 720px) {
