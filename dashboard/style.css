@@ -228,15 +228,15 @@ td.mono, .hash { font-family: ui-monospace, Consolas, monospace; font-size: 13px
 .legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
 
 /* ---------- Quick links (trang Tổng quan) ---------- */
-.quicklinks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.quicklinks { display: grid; grid-template-columns: 1fr; gap: 14px; }
 .qlink {
   display: flex; flex-direction: column; gap: 6px; text-decoration: none;
   background: transparent; border: 1px solid var(--line); border-radius: 12px;
   padding: 18px 20px; transition: border-color .15s, transform .15s;
 }
 .qlink:hover { border-color: var(--sage-dark); transform: translateY(-2px); }
-.qlink b { color: var(--text); font-size: 16px; }
-.qlink span { color: var(--muted); font-size: 13px; }
+.qlink b { color: var(--text); font-size: 17px; }
+.qlink span { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
 @media (max-width: 720px) { .quicklinks { grid-template-columns: 1fr; } }
 
 /* ---------- Data grid (sensor preview) ---------- */
