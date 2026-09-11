@@ -385,7 +385,8 @@ a.tx:hover { text-decoration: underline; }
 .band-note { margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
 .band-note b { color: var(--text); }
 .arch-flow { display: flex; align-items: center; gap: 14px; padding: 14px 22px; }
-.flow-arrow { color: var(--muted-2); font-size: 18px; line-height: 1; }
+.flow-arrow { color: var(--muted-2); line-height: 1; }
+.flow-arrow svg { width: 22px; height: 22px; display: block; }
 .flow-what b { display: block; font-size: 13.5px; color: var(--text); }
 .flow-what span { color: var(--muted); font-size: 12.5px; }
 
