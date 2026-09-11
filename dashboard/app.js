@@ -217,7 +217,30 @@ $("#btn-wallet").addEventListener("click", async () => {
   } catch (e) { alert("Lỗi kết nối ví: " + e.message); }
 });
 
+// Tô sáng mục sidebar tương ứng với panel đang hiện trong khung nhìn
+function initSidenavSpy() {
+  const links = [...document.querySelectorAll(".sidenav a")];
+  const map = new Map(links.map((a) => [a.dataset.target, a]));
+  const setActive = (id) => {
+    links.forEach((a) => a.classList.toggle("active", a.dataset.target === id));
+  };
+  const io = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((e) => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      if (visible[0]) setActive(visible[0].target.id);
+    },
+    { rootMargin: "0px 0px -55% 0px", threshold: [0, .1, .25, .5, .75, 1] }
+  );
+  for (const id of map.keys()) {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  }
+  if (links[0]) links[0].classList.add("active");
+}
+
 async function boot() {
+  initSidenavSpy();
   try {
     await connect();
     await loadPreview();
