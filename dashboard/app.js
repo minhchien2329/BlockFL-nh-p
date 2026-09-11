@@ -49,7 +49,7 @@ function renderPreview(pv) {
     }).join("");
     const sample = n.sample_rows.map((row) =>
       `<tr class="${row.label ? 'r-anom' : 'r-norm'}">
-        <td>${row.label ? 'bất thường' : 'bình thường'}</td>
+        <td>${row.label ? 'Bất thường' : 'Bình thường'}</td>
         ${feats.map((f) => `<td>${row[f]}</td>`).join("")}</tr>`).join("");
     const pct = Math.round(n.anomaly_ratio * 100);
     return `<div class="dcard">
@@ -59,7 +59,7 @@ function renderPreview(pv) {
       </div>
       <div class="dist">
         <div class="dist-bar"><i class="norm" style="width:${100 - pct}%"></i><i class="anom" style="width:${pct}%"></i></div>
-        <div class="dist-lbl"><span>bình thường ${n.n_normal}</span><span>bất thường ${n.n_anomaly} (${pct}%)</span></div>
+        <div class="dist-lbl"><span>Bình thường ${n.n_normal}</span><span>Bất thường ${n.n_anomaly} (${pct}%)</span></div>
       </div>
       <table class="dtable">
         <thead><tr><th>Đặc trưng</th><th>Bình thường</th><th>Bất thường</th></tr></thead>
@@ -147,7 +147,7 @@ async function refresh() {
       const rowsHtml = roundIdx.map((r, k) => {
         const [ghash, totalSamples, count, aggregated] = roundData[k];
         return `<tr><td>${r}</td><td>${count}</td><td>${totalSamples}</td>
-          <td>${aggregated ? '<span class="badge ok">✓ xong</span>' : '<span class="badge wait">chờ</span>'}</td>
+          <td>${aggregated ? '<span class="badge ok">✓ Xong</span>' : '<span class="badge wait">Chờ</span>'}</td>
           <td class="hash">${hx(ghash)}</td>
           <td>${matchBadge(ghash, results, r)}</td></tr>`;
       });
@@ -202,12 +202,12 @@ function renderConfig(results) {
   const c = results?.config;
   if (!c) { box.innerHTML = `<p class="hint">Chưa có <code>results.json</code> — chạy <code>python run_demo.py</code>.</p>`; return; }
   const items = [
-    ["Số round huấn luyện", c.rounds, "mỗi round = 1 vòng local training + 1 lần FedAvg + 1 lần chốt on-chain"],
-    ["Số edge node", c.n_nodes, "mỗi node giữ dữ liệu riêng, không chia sẻ dữ liệu thô"],
+    ["Số round huấn luyện", c.rounds, "Mỗi round = 1 vòng local training + 1 lần FedAvg + 1 lần chốt on-chain"],
+    ["Số edge node", c.n_nodes, "Mỗi node giữ dữ liệu riêng, không chia sẻ dữ liệu thô"],
     ["Dirichlet <span class=\"nocaps\">α</span>", c.dirichlet_alpha, "α càng nhỏ → dữ liệu giữa các node càng lệch nhau (non-IID càng mạnh)"],
-    ["Epoch cục bộ", c.epochs, "số vòng mỗi node train trên dữ liệu của mình trước khi nộp Δw"],
-    ["Learning rate", c.lr, "tốc độ học của SGD tại từng node"],
-    ["Ghi lên blockchain", c.chain ? "có" : "không", c.chain ? `mạng ${c.network}` : "chế độ --no-chain, chỉ chạy FL"],
+    ["Epoch cục bộ", c.epochs, "Số vòng mỗi node train trên dữ liệu của mình trước khi nộp Δw"],
+    ["Learning rate", c.lr, "Tốc độ học của SGD tại từng node"],
+    ["Ghi lên blockchain", c.chain ? "Có" : "Không", c.chain ? `Mạng ${c.network}` : "Chế độ --no-chain, chỉ chạy FL"],
   ];
   box.innerHTML = items.map(([k, v, note]) =>
     `<div class="kv"><div class="kv-k">${k}</div><div class="kv-v">${v}</div><div class="kv-n">${note}</div></div>`).join("");
@@ -252,12 +252,12 @@ function renderDelta(results) {
    chỉ là chưa bao giờ được đặt cạnh nhau. */
 function matchBadge(onchainHash, results, round) {
   const row = results?.history?.find((h) => (h.onchain_round ?? h.round) === round);
-  if (!row) return `<span class="badge wait" title="round này không có trong results.json">–</span>`;
+  if (!row) return `<span class="badge wait" title="Round này không có trong results.json">–</span>`;
   const a = (onchainHash || "").replace(/^0x/, "").toLowerCase();
   const b = (row.global_hash || "").replace(/^0x/, "").toLowerCase();
   return a && a === b
-    ? `<span class="badge ok" title="keccak256 của ai_model/weights/global_round_${row.round}.npy khớp hash trên chuỗi">✓ khớp</span>`
-    : `<span class="badge bad" title="on-chain ${a.slice(0, 16)}… ≠ file ${b.slice(0, 16)}…">✗ lệch</span>`;
+    ? `<span class="badge ok" title="Keccak256 của ai_model/weights/global_round_${row.round}.npy khớp hash trên chuỗi">✓ Khớp</span>`
+    : `<span class="badge bad" title="On-chain ${a.slice(0, 16)}… ≠ file ${b.slice(0, 16)}…">✗ Lệch</span>`;
 }
 
 /* Mỗi mạng có một explorer khác nhau; localhost thì không có, nên tx hash chỉ
@@ -549,18 +549,18 @@ async function renderContract(currentRound, nodes, balances) {
   const kv = (k, v, n) => `<div class="kv"><div class="kv-k">${k}</div><div class="kv-v">${v}</div><div class="kv-n">${n}</div></div>`;
   info.innerHTML =
     kv("Token", `${symbol}`, `${name} · ${decimals} chữ số thập phân · chuẩn ERC-20`) +
-    kv("Tổng cung hiện tại", `${bfl(totalSupply)}`, "toàn bộ sinh ra từ distributeReward — không có đợt phát hành nào khác") +
-    kv("Round hiện tại", `${currentRound}`, `round đang mở, tức đã chốt xong ${currentRound - 1} round`) +
-    kv("minNodes", `${minNodes}`, `contract từ chối aggregate nếu chưa đủ ${minNodes} node nộp Δw`) +
-    kv("rewardPerRound", `${bfl(rewardPerRound)}`, "tổng BFL phát cho mỗi round, chia theo tỉ lệ số mẫu") +
-    kv("Số node đã đăng ký", `${nodeCount}`, "chỉ những địa chỉ này mới gọi được submitWeights");
+    kv("Tổng cung hiện tại", `${bfl(totalSupply)}`, "Toàn bộ sinh ra từ distributeReward — không có đợt phát hành nào khác") +
+    kv("Round hiện tại", `${currentRound}`, `Round đang mở, tức đã chốt xong ${currentRound - 1} round`) +
+    kv("minNodes", `${minNodes}`, `Contract từ chối aggregate nếu chưa đủ ${minNodes} node nộp Δw`) +
+    kv("rewardPerRound", `${bfl(rewardPerRound)}`, "Tổng BFL phát cho mỗi round, chia theo tỉ lệ số mẫu") +
+    kv("Số node đã đăng ký", `${nodeCount}`, "Chỉ những địa chỉ này mới gọi được submitWeights");
 
   const addr = $("#addr-info");
   if (addr) {
     addr.innerHTML =
-      kv("Mạng", deployment.network, "đổi sang sepolia thì mọi mã giao dịch trong nhật ký thành link Etherscan") +
-      kv("Owner", `<span class="mono-v">${short(owner)}</span>`, "tài khoản điều phối round — nhưng không mint được token") +
-      kv("Aggregator", `<span class="mono-v">${short(deployment.aggregator.address)}</span>`, "giữ toàn bộ trạng thái round + quyền mint") +
+      kv("Mạng", deployment.network, "Đổi sang Sepolia thì mọi mã giao dịch trong nhật ký thành link Etherscan") +
+      kv("Owner", `<span class="mono-v">${short(owner)}</span>`, "Tài khoản điều phối round — nhưng không mint được token") +
+      kv("Aggregator", `<span class="mono-v">${short(deployment.aggregator.address)}</span>`, "Giữ toàn bộ trạng thái round + quyền mint") +
       kv("BlockFLToken", `<span class="mono-v">${short(deployment.token.address)}</span>`, "ERC-20 tối giản, minter đã trỏ về Aggregator");
   }
 
@@ -610,7 +610,7 @@ function renderNonIid(pv) {
     const pct = n.anomaly_ratio * 100;
     return `<div class="nid">
       <div class="nid-top"><b>node ${n.node_id}</b><span>${total} mẫu</span></div>
-      <div class="nid-track" title="độ dài = tổng số mẫu, phần đậm = ca bất thường">
+      <div class="nid-track" title="Độ dài = tổng số mẫu, phần đậm = ca bất thường">
         <div class="nid-fill" style="width:${(total / maxN) * 100}%">
           <i class="norm" style="flex:${100 - pct}"></i><i class="anom" style="flex:${pct}"></i>
         </div>
@@ -655,19 +655,19 @@ function renderSweep(sw) {
       <div class="dl-lbl">Accuracy qua ${s.n_runs} lần chia</div>
       <div class="dl-row"><span class="dl-after">${pc(s.acc_mean)}%</span>
         <span class="dl-spread">± ${pc(s.acc_std)}</span></div>
-      <div class="dl-gain neutral">thấp nhất ${pc(s.acc_min)}% · cao nhất ${pc(s.acc_max)}%</div>
+      <div class="dl-gain neutral">Thấp nhất ${pc(s.acc_min)}% · cao nhất ${pc(s.acc_max)}%</div>
     </div>
     <div class="dl-item">
       <div class="dl-lbl">F1 qua ${s.n_runs} lần chia</div>
       <div class="dl-row"><span class="dl-after">${pc(s.f1_mean)}%</span>
         <span class="dl-spread">± ${pc(s.f1_std)}</span></div>
-      <div class="dl-gain neutral">lớp bất thường — chỉ số khó ăn may nhất</div>
+      <div class="dl-gain neutral">Lớp bất thường — chỉ số khó ăn may nhất</div>
     </div>
     <div class="dl-item">
       <div class="dl-lbl">FedAvg thắng mọi node tự train</div>
       <div class="dl-row"><span class="dl-after">${s.wins}/${s.n_runs}</span>
         <span class="dl-spread">lần</span></div>
-      <div class="dl-gain">cách biệt trung bình +${pc(s.gap_mean)} điểm %</div>
+      <div class="dl-gain">Cách biệt trung bình +${pc(s.gap_mean)} điểm %</div>
     </div>`;
 
   // đường hội tụ của TỪNG lần chia — cho thấy chúng chụm lại chứ không tán loạn
@@ -693,8 +693,8 @@ function renderSweep(sw) {
       <td>${pc(r.worst_local_acc)}%</td>
       <td>+${((r.acc - r.best_local_acc) * 100).toFixed(1)} điểm %</td>
       <td>${r.beats_every_local
-        ? '<span class="badge ok">✓ thắng</span>'
-        : '<span class="badge bad">✗ thua</span>'}</td>
+        ? '<span class="badge ok">✓ Thắng</span>'
+        : '<span class="badge bad">✗ Thua</span>'}</td>
     </tr>`).join("");
   }
 
@@ -719,12 +719,12 @@ function renderSweep(sw) {
    nhịp 5 giây sẵn có, nên round mới hiện ra mà không cần làm gì thêm.
    ======================================================================= */
 const PHASE_TEXT = {
-  idle: "chưa chạy",
-  reset: "đang xoá chain local…",
-  deploy: "đang deploy contract…",
-  train: "đang huấn luyện + ghi on-chain…",
-  done: "xong",
-  error: "lỗi",
+  idle: "Chưa chạy",
+  reset: "Đang xoá chain local…",
+  deploy: "Đang deploy contract…",
+  train: "Đang huấn luyện + ghi on-chain…",
+  done: "Xong",
+  error: "Lỗi",
 };
 const PHASE_ORDER = ["reset", "deploy", "train"];
 let runnerTimer = null;

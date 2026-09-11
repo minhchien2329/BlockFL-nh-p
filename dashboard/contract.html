@@ -61,12 +61,12 @@
         <table>
           <thead><tr><th>Hàm</th><th>Ai gọi được</th><th>Contract chặn điều gì</th></tr></thead>
           <tbody>
-            <tr><td class="mono">registerNode(node)</td><td><span class="badge wait">owner</span></td><td>đăng ký trùng · địa chỉ 0</td></tr>
-            <tr><td class="mono">submitWeights(hash, n, round)</td><td><span class="badge ok">node đã đăng ký</span></td><td>sai round · nộp 2 lần · hash rỗng · n = 0 · round đã chốt</td></tr>
-            <tr><td class="mono">aggregate(round, globalHash)</td><td><span class="badge wait">owner</span></td><td>chưa đủ minNodes · đã aggregate rồi · hash rỗng</td></tr>
-            <tr><td class="mono">distributeReward(round)</td><td><span class="badge wait">owner</span></td><td>round chưa aggregate · trả thưởng 2 lần cho cùng một node</td></tr>
-            <tr><td class="mono">advanceRound()</td><td><span class="badge wait">owner</span></td><td>mở round mới khi round hiện tại chưa chốt</td></tr>
-            <tr><td class="mono">mint(to, amount)</td><td><span class="badge ok">chỉ Aggregator</span></td><td>owner cũng <b>không</b> tự mint được cho mình sau khi đã <code>setMinter</code></td></tr>
+            <tr><td class="mono">registerNode(node)</td><td><span class="badge wait">Owner</span></td><td>Đăng ký trùng · địa chỉ 0</td></tr>
+            <tr><td class="mono">submitWeights(hash, n, round)</td><td><span class="badge ok">Node đã đăng ký</span></td><td>Sai round · nộp 2 lần · hash rỗng · n = 0 · round đã chốt</td></tr>
+            <tr><td class="mono">aggregate(round, globalHash)</td><td><span class="badge wait">Owner</span></td><td>Chưa đủ minNodes · đã aggregate rồi · hash rỗng</td></tr>
+            <tr><td class="mono">distributeReward(round)</td><td><span class="badge wait">Owner</span></td><td>Round chưa aggregate · trả thưởng 2 lần cho cùng một node</td></tr>
+            <tr><td class="mono">advanceRound()</td><td><span class="badge wait">Owner</span></td><td>Mở round mới khi round hiện tại chưa chốt</td></tr>
+            <tr><td class="mono">mint(to, amount)</td><td><span class="badge ok">Chỉ Aggregator</span></td><td>Owner cũng <b>không</b> tự mint được cho mình sau khi đã <code>setMinter</code></td></tr>
           </tbody>
         </table>
       </div>

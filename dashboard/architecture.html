@@ -75,7 +75,7 @@
           <div class="band-head">
             <span class="band-tag ai">Tầng AI</span>
             <b>Học liên kết (FedAvg)</b>
-            <span class="band-sub">huấn luyện cục bộ 5 epoch → trung bình có trọng số</span>
+            <span class="band-sub">Huấn luyện cục bộ 5 epoch → trung bình có trọng số</span>
           </div>
           <div class="band-body">
             <div class="abox">
@@ -90,7 +90,7 @@
             </div>
             <div class="abox">
               <b>3 · Băm kết quả</b>
-              <span>keccak256 của global model mới → 32 byte duy nhất đại diện cho nó</span>
+              <span>Keccak256 của global model mới → 32 byte duy nhất đại diện cho nó</span>
               <code>ai_model/fedavg.py → weights_hash()</code>
             </div>
           </div>
@@ -100,7 +100,7 @@
         <div class="arch-flow">
           <div class="flow-arrow">▼</div>
           <div class="flow-what">
-            <b>keccak256(Δw) — đúng 32 byte lên chuỗi</b>
+            <b>Keccak256(Δw) — đúng 32 byte lên chuỗi</b>
             <span>Trọng số thật nằm ở file <code>.npy</code>; chuỗi chỉ giữ dấu vân tay của nó.</span>
           </div>
         </div>
