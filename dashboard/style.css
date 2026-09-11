@@ -321,17 +321,25 @@ footer {
 .dl-gain.down { color: var(--purple); background: var(--purple-soft); }
 @media (max-width: 860px) { .delta { grid-template-columns: 1fr; } }
 
-/* ---------- Bảng khoá–giá trị (cấu hình thí nghiệm) ---------- */
-.kv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.kv { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; }
-.kv-k { color: var(--muted); font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
-.kv-v { color: var(--text); font-size: 19px; font-weight: 700; margin: 3px 0 4px; letter-spacing: -.01em; }
-.kv-n {
-  color: var(--muted-2); font-size: 11.5px; line-height: 1.4;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+/* ---------- Bảng khoá–giá trị (cấu hình thí nghiệm, địa chỉ contract...) ---------- */
+.kv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.kv-grid.kv-grid-1col { grid-template-columns: 1fr; }
+.kv { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; }
+.kv-k { color: var(--muted); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.kv-v { color: var(--text); font-size: 22px; font-weight: 700; margin: 4px 0 6px; letter-spacing: -.01em; }
+.kv-n { color: var(--muted-2); font-size: 12.5px; line-height: 1.55; }
 @media (max-width: 980px) { .kv-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .kv-grid { grid-template-columns: 1fr; } }
+
+/* Bản gọn dùng riêng cho "Cấu hình thí nghiệm" — thẻ nhỏ, mô tả 1 dòng */
+#exp-config.kv-grid { gap: 10px; }
+#exp-config .kv { padding: 10px 14px; }
+#exp-config .kv-k { font-size: 11.5px; }
+#exp-config .kv-v { font-size: 19px; margin: 3px 0 4px; }
+#exp-config .kv-n {
+  font-size: 11.5px; line-height: 1.4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 
 /* ---------- Global model trên dữ liệu riêng từng node ---------- */
 .fair-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
