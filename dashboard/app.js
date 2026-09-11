@@ -682,8 +682,6 @@ function renderSweep(sw) {
     height: 260, min: 80, max: 100, fmt: (v) => v.toFixed(0) + "%",
     note: "Mỗi đường là một lần chia dữ liệu hoàn toàn khác — chúng hội tụ về cùng một vùng, không phân tán",
   });
-  legend("#chart-sweep-legend", series);
-
   const body = $("#sweep-table tbody");
   if (body) {
     body.innerHTML = runs.map((r) => `<tr>
