@@ -367,11 +367,11 @@ a.tx:hover { text-decoration: underline; }
 .band-head b { font-size: 17px; color: var(--text); }
 .band-sub { color: var(--muted); font-size: 13px; }
 .band-tag {
-  font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
 }
-.band-tag.iot { color: var(--green); }
-.band-tag.ai { color: var(--accent); }
-.band-tag.chain { color: var(--purple); }
+.band-tag.iot { color: #2b6b47; }
+.band-tag.ai { color: #37493f; }
+.band-tag.chain { color: #1f6267; }
 .band-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
 .abox { border: 1px solid var(--line-soft); border-radius: 10px; padding: 13px 15px; background: var(--panel); }
 .abox b { display: block; font-size: 14px; color: var(--text); margin-bottom: 4px; }
