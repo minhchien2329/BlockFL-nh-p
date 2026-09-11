@@ -48,7 +48,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 15.5px/1.6 "Segoe UI", -apple-system, Roboto, Inter, sans-serif;
+  font: 15.5px/1.6 "Times New Roman", Times, Georgia, serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -248,7 +248,7 @@ td.mono, .hash { font-family: ui-monospace, Consolas, monospace; font-size: 13px
 @media (max-width: 720px) { .quicklinks { grid-template-columns: 1fr; } }
 
 /* ---------- Data grid (sensor preview) ---------- */
-.data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 18px; }
+.data-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
 .dcard {
   background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px;
   padding: 18px 20px; transition: border-color .15s;
