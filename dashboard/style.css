@@ -10,6 +10,7 @@
   --bg: #fafafa;
   --panel: #ffffff;
   --panel-2: #c3e8ee;
+  --table-tint: #eaf5f7;
   --panel-3: #efece0;
   --line: #dce6dc;
   --line-soft: #e8f0e7;
@@ -197,9 +198,9 @@ button:disabled { opacity: .55; cursor: default; transform: none; }
 .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--line-soft); }
 table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
 th, td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line-soft); white-space: nowrap; }
-thead th { color: var(--muted); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .03em; background: var(--panel-2); }
+thead th { color: var(--muted); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: .03em; background: var(--table-tint); }
 tbody tr { transition: background .1s; }
-tbody tr:hover { background: var(--panel-2); }
+tbody tr:hover { background: var(--table-tint); }
 tbody tr:last-child td { border-bottom: none; }
 td.mono, .hash { font-family: ui-monospace, Consolas, monospace; font-size: 13px; color: var(--muted); }
 .badge { padding: 4px 11px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }

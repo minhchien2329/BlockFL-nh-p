@@ -61,10 +61,10 @@ function renderPreview(pv) {
         <div class="dist-bar"><i class="norm" style="width:${100 - pct}%"></i><i class="anom" style="width:${pct}%"></i></div>
         <div class="dist-lbl"><span>Bình thường ${n.n_normal}</span><span>Bất thường ${n.n_anomaly} (${pct}%)</span></div>
       </div>
-      <table class="dtable">
+      <div class="table-wrap"><table class="dtable">
         <thead><tr><th>Đặc trưng</th><th>Bình thường</th><th>Bất thường</th></tr></thead>
         <tbody>${statRows}</tbody>
-      </table>
+      </table></div>
       <details>
         <summary>Xem ${n.sample_rows.length} mẫu ví dụ</summary>
         <div class="table-wrap"><table class="dtable">
