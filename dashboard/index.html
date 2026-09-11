@@ -10,8 +10,11 @@
 <body>
   <header>
     <div class="brand">
-      <h1>BlockFL <span>Dashboard</span></h1>
-      <p>Học liên kết (Federated Learning) tích hợp Blockchain — giám sát round huấn luyện &amp; token thưởng</p>
+      <div class="logo">⛓️</div>
+      <div>
+        <h1>BlockFL <span>Dashboard</span></h1>
+        <p>Học liên kết (Federated Learning) bảo mật dữ liệu cảm biến, tích hợp Blockchain — giám sát round huấn luyện &amp; token thưởng theo thời gian thực</p>
+      </div>
     </div>
     <div class="conn">
       <span id="dot" class="dot off"></span>
@@ -20,30 +23,42 @@
     </div>
   </header>
 
+  <nav class="quicknav">
+    <a href="#panel-data">📡 Dữ liệu IoT</a>
+    <a href="#panel-chart">🧠 Hội tụ AI</a>
+    <a href="#panel-rounds">⛓️ Round on-chain</a>
+    <a href="#panel-nodes">🪙 Token thưởng</a>
+    <a href="#panel-events">📜 Nhật ký sự kiện</a>
+  </nav>
+
   <section class="meta" id="meta"></section>
 
   <section class="cards">
-    <div class="card"><div class="k">Round hiện tại</div><div class="v" id="c-round">–</div></div>
-    <div class="card"><div class="k">Số node tham gia</div><div class="v" id="c-nodes">–</div></div>
-    <div class="card"><div class="k">Tổng BFL đã thưởng</div><div class="v" id="c-token">–</div></div>
-    <div class="card"><div class="k">Độ chính xác mới nhất</div><div class="v" id="c-acc">–</div></div>
+    <div class="card"><div class="k">🔄 Round hiện tại</div><div class="v" id="c-round">–</div></div>
+    <div class="card"><div class="k">🧩 Số node tham gia</div><div class="v" id="c-nodes">–</div></div>
+    <div class="card"><div class="k">🪙 Tổng BFL đã thưởng</div><div class="v" id="c-token">–</div></div>
+    <div class="card"><div class="k">🎯 Độ chính xác mới nhất</div><div class="v" id="c-acc">–</div></div>
   </section>
 
-  <section class="panel">
-    <h2>Dữ liệu cảm biến mô phỏng theo từng node</h2>
+  <section class="panel" id="panel-data">
+    <h2><span class="ico">📡</span>Dữ liệu cảm biến mô phỏng theo từng node<span class="src-tag iot">Tầng IoT</span></h2>
     <p class="hint">Nguồn: <code>data/nodes_preview.json</code> — mỗi node = 1 bệnh viện/trạm, phân bố lớp lệch nhau (non-IID)</p>
     <div id="data-grid" class="data-grid"></div>
   </section>
 
-  <section class="panel">
-    <h2>Độ hội tụ của Global Model qua từng round</h2>
-    <p class="hint">Nguồn: <code>results.json</code> (đánh giá trên tập test gộp của tất cả node)</p>
+  <section class="panel" id="panel-chart">
+    <h2><span class="ico">🧠</span>Độ hội tụ của Global Model qua từng round<span class="src-tag ai">Tầng AI</span></h2>
+    <p class="hint">Nguồn: <code>results.json</code> — đánh giá trên tập test gộp của tất cả node sau mỗi vòng FedAvg</p>
     <div id="chart"></div>
+    <div class="legend">
+      <b><i style="background:#5b8cff"></i>Accuracy</b>
+      <b><i style="background:#3fd97f"></i>F1 (lớp bất thường)</b>
+    </div>
   </section>
 
-  <section class="panel">
-    <h2>Lịch sử round (on-chain)</h2>
-    <p class="hint">Đọc trực tiếp từ smart contract <code>FederatedAggregator</code></p>
+  <section class="panel" id="panel-rounds">
+    <h2><span class="ico">⛓️</span>Lịch sử round (on-chain)<span class="src-tag chain">Tầng Blockchain</span></h2>
+    <p class="hint">Đọc trực tiếp từ smart contract <code>FederatedAggregator</code> — không qua trung gian</p>
     <div class="table-wrap">
       <table id="rounds">
         <thead><tr><th>Round</th><th>Số node nộp Δw</th><th>Tổng mẫu</th><th>Đã aggregate</th><th>Global model hash</th></tr></thead>
@@ -52,18 +67,20 @@
     </div>
   </section>
 
-  <section class="panel">
-    <h2>Đóng góp &amp; token thưởng theo node</h2>
+  <section class="panel" id="panel-nodes">
+    <h2><span class="ico">🪙</span>Đóng góp &amp; token thưởng theo node<span class="src-tag chain">Tầng Blockchain</span></h2>
+    <p class="hint">Token BFL (ERC-20) được <code>FederatedAggregator</code> tự động mint theo tỉ lệ số mẫu đóng góp</p>
     <div class="table-wrap">
       <table id="nodes">
-        <thead><tr><th>Node</th><th>Địa chỉ</th><th>Mẫu dữ liệu (round cuối)</th><th>Số dư BFL</th><th></th></tr></thead>
+        <thead><tr><th>Node</th><th>Địa chỉ</th><th>Mẫu dữ liệu (round cuối)</th><th>Số dư BFL</th><th style="width:140px">Tỉ lệ</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
   </section>
 
-  <section class="panel">
-    <h2>Nhật ký sự kiện on-chain</h2>
+  <section class="panel" id="panel-events">
+    <h2><span class="ico">📜</span>Nhật ký sự kiện on-chain<span class="src-tag chain">Tầng Blockchain</span></h2>
+    <p class="hint">Log bất biến — mọi thao tác của node/aggregator đều được ghi lại vĩnh viễn trên chain</p>
     <div id="events" class="events"></div>
   </section>
 

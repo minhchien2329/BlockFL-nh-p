@@ -3,7 +3,8 @@
 Phục vụ từ thư mục gốc dự án để trang đọc được:
   /dashboard/index.html , /deployments/localhost.json , /results.json
 
-Chạy:  python dashboard/serve.py   ->  mở http://127.0.0.1:8000/dashboard/
+Chạy:  python dashboard/serve.py [port]   ->  mở http://127.0.0.1:<port>/dashboard/
+       (port mặc định 8000, tự đổi nếu đang bị chiếm)
 """
 from __future__ import annotations
 
@@ -19,7 +20,7 @@ except Exception:
     pass
 
 ROOT = Path(__file__).resolve().parents[1]
-PORT = 8000
+PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):

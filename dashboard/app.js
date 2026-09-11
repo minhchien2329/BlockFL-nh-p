@@ -155,9 +155,25 @@ async function renderEvents() {
   await pull("RewardDistributed", (a) => `round ${a.round} · ${short(a.node)} nhận ${(+ethers.formatUnits(a.amount, 18)).toFixed(2)} BFL`);
   await pull("NodeRegistered", (a) => `đăng ký node ${short(a.node)}`);
 
+  const evClass = {
+    WeightsSubmitted: "ev-submit",
+    ModelAggregated: "ev-agg",
+    RewardDistributed: "ev-reward",
+    NodeRegistered: "ev-reg",
+  };
+  const evIcon = {
+    WeightsSubmitted: "📤",
+    ModelAggregated: "⚙️",
+    RewardDistributed: "🪙",
+    NodeRegistered: "🆕",
+  };
+
   logs.sort((x, y) => y.block - x.block);
   box.innerHTML = logs.slice(0, 40).map((l) =>
-    `<div class="ev"><span class="t">${l.name}</span><span class="d">${l.text}</span></div>`).join("")
+    `<div class="ev ${evClass[l.name] || ""}">
+      <span>${evIcon[l.name] || "•"}</span>
+      <span class="t">${l.name}</span><span class="d">${l.text}</span>
+    </div>`).join("")
     || `<div class="hint">Chưa có sự kiện nào.</div>`;
 }
 
