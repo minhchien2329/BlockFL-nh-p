@@ -32,10 +32,10 @@
   /* sidebar toàn chiều dọc màn hình — nền đậm hơn màu #5D7B6F gốc một chút */
   --sidebar-w: 268px;
   --sidebar-w-collapsed: 78px;
-  --sidebar-bg: #3f5449;
-  --sidebar-bg-hover: #4f6a5a;
-  --sidebar-bg-active: #33453b;
-  --sidebar-border: #5a7466;
+  --sidebar-bg: #32403a;
+  --sidebar-bg-hover: #435a4d;
+  --sidebar-bg-active: #29362f;
+  --sidebar-border: #4d6357;
   --sidebar-text: var(--cream);
   --sidebar-text-dim: #b6c6ba;
 }
@@ -305,4 +305,160 @@ footer { color: var(--muted-2); font-size: 13px; text-align: center; margin-top:
 @media (max-width: 720px) {
   .cards { grid-template-columns: repeat(2, 1fr); }
   header { flex-direction: column; }
+}
+
+/* ---------- Ghi chú diễn giải dưới biểu đồ / bảng ---------- */
+.note {
+  margin: 14px 0 0; padding: 13px 16px; font-size: 13.5px; line-height: 1.65;
+  color: var(--muted); background: var(--panel-2); border-radius: 10px;
+  border-left: 3px solid var(--purple);
+}
+.note b { color: var(--text); font-weight: 600; }
+.note code { background: var(--panel-3); padding: 1px 7px; border-radius: 5px; color: var(--accent); font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; }
+
+/* ---------- Trước → sau (baseline vs kết quả cuối) ---------- */
+.delta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.dl-item { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 20px; }
+.dl-lbl { color: var(--muted); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.dl-row { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.dl-before { color: var(--muted-2); font-size: 19px; font-weight: 600; text-decoration: line-through; text-decoration-color: var(--line); }
+.dl-arrow { color: var(--muted-2); font-size: 15px; }
+.dl-after { color: var(--text); font-size: 27px; font-weight: 700; letter-spacing: -.02em; }
+.dl-gain { margin-top: 6px; display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--green); background: var(--green-soft); padding: 3px 10px; border-radius: 999px; }
+.dl-gain.down { color: var(--purple); background: var(--purple-soft); }
+@media (max-width: 860px) { .delta { grid-template-columns: 1fr; } }
+
+/* ---------- Bảng khoá–giá trị (cấu hình thí nghiệm) ---------- */
+.kv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.kv { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; }
+.kv-k { color: var(--muted); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.kv-v { color: var(--text); font-size: 22px; font-weight: 700; margin: 4px 0 6px; letter-spacing: -.01em; }
+.kv-n { color: var(--muted-2); font-size: 12.5px; line-height: 1.55; }
+@media (max-width: 980px) { .kv-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .kv-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Global model trên dữ liệu riêng từng node ---------- */
+.fair-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.fair { border: 1px solid var(--line); border-radius: var(--radius); padding: 15px 18px; }
+.fair-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.fair-top b { font-size: 15.5px; }
+.fair-top span { color: var(--muted); font-size: 12.5px; }
+.fair .bar { min-width: 0; }
+.fair-lbl { display: flex; justify-content: space-between; align-items: baseline; margin-top: 7px; font-size: 12.5px; color: var(--muted-2); }
+.fair-lbl b { color: var(--text); font-size: 16px; }
+@media (max-width: 720px) { .fair-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Mã giao dịch on-chain trong nhật ký sự kiện ---------- */
+.ev { flex-wrap: wrap; }
+.ev-meta { margin-left: auto; color: var(--muted-2); font-size: 12px; font-family: ui-monospace, Consolas, monospace; white-space: nowrap; }
+.tx { color: var(--purple); text-decoration: none; }
+a.tx:hover { text-decoration: underline; }
+.badge.bad { background: #c0392b18; color: #c0392b; }
+.kv-k .nocaps { text-transform: none; }
+
+/* ---------- Sơ đồ kiến trúc CPS ---------- */
+.arch { display: flex; flex-direction: column; }
+.arch-band { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+.band-iot { border-left: 4px solid var(--green); }
+.band-ai { border-left: 4px solid var(--accent); }
+.band-chain { border-left: 4px solid var(--purple); }
+.band-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 15px; }
+.band-head b { font-size: 17px; color: var(--text); }
+.band-sub { color: var(--muted); font-size: 13px; }
+.band-tag {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  padding: 3px 10px; border-radius: 999px;
+}
+.band-tag.iot { background: var(--green-soft); color: var(--green); }
+.band-tag.ai { background: var(--accent-soft); color: var(--accent); }
+.band-tag.chain { background: var(--purple-soft); color: var(--purple); }
+.band-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.abox { border: 1px solid var(--line-soft); border-radius: 10px; padding: 13px 15px; background: var(--panel); }
+.abox b { display: block; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+.abox span { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+.abox code {
+  display: block; margin-top: 8px; font-family: ui-monospace, Consolas, monospace;
+  font-size: 11.5px; color: var(--accent); background: var(--panel-3);
+  padding: 4px 8px; border-radius: 6px; overflow-wrap: anywhere;
+}
+.abox.node { background: var(--panel-2); }
+.band-note { margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.band-note b { color: var(--text); }
+.arch-flow { display: flex; align-items: center; gap: 14px; padding: 14px 22px; }
+.flow-arrow { color: var(--muted-2); font-size: 18px; line-height: 1; }
+.flow-what b { display: block; font-size: 13.5px; color: var(--text); }
+.flow-what span { color: var(--muted); font-size: 12.5px; }
+
+/* ---------- Danh sách bước (luồng end-to-end) ---------- */
+.steps { display: flex; flex-direction: column; gap: 10px; }
+.step { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; }
+.step > i {
+  flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--accent);
+  color: #fff; font-style: normal; font-weight: 700; font-size: 13px;
+  display: inline-flex; align-items: center; justify-content: center; margin-top: 1px;
+}
+.step b { display: block; font-size: 14.5px; color: var(--text); }
+.step span { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; line-height: 1.55; }
+.step code {
+  display: inline-block; margin-top: 7px; font-family: ui-monospace, Consolas, monospace;
+  font-size: 11.5px; color: var(--accent); background: var(--panel-3);
+  padding: 4px 9px; border-radius: 6px; overflow-wrap: anywhere;
+}
+
+/* ---------- Công thức chia thưởng ---------- */
+.formula {
+  background: var(--panel-2); border-radius: 10px; padding: 18px 20px; margin-bottom: 18px;
+  text-align: center; font-family: ui-monospace, Consolas, monospace; font-size: 16px;
+  color: var(--text); border: 1px dashed var(--line);
+}
+.formula sub { font-size: 11px; color: var(--muted); }
+.kv-v .mono-v { font-family: ui-monospace, Consolas, monospace; font-size: 15px; }
+
+/* ---------- Phân phối non-IID giữa các node ---------- */
+.nid-grid { display: flex; flex-direction: column; gap: 14px; }
+.nid { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; }
+.nid-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 9px; }
+.nid-top b { font-size: 15px; }
+.nid-top span { color: var(--muted); font-size: 12.5px; }
+.nid-track { background: var(--panel-3); border-radius: 6px; overflow: hidden; }
+.nid-fill { display: flex; height: 16px; border-radius: 6px; overflow: hidden; min-width: 2%; }
+.nid-fill i.norm { background: var(--green); }
+.nid-fill i.anom { background: var(--amber); }
+.nid-lbl { display: flex; justify-content: space-between; margin-top: 7px; font-size: 12.5px; color: var(--muted); }
+.nid-lbl b { color: var(--amber); }
+.step code.inline { display: inline; margin-top: 0; padding: 2px 7px; white-space: nowrap; }
+.dl-spread { color: var(--muted); font-size: 15px; font-weight: 600; }
+.dl-gain.neutral { color: var(--muted); background: var(--panel-3); font-weight: 600; }
+
+/* ---------- Bảng điều khiển chạy demo ---------- */
+.runner { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+#btn-run {
+  background: linear-gradient(135deg, #2fa563, #45cf82); box-shadow: 0 3px 12px -4px #2fa56388;
+}
+#btn-run:hover { filter: brightness(1.08); }
+#btn-run:disabled { background: var(--muted-2); box-shadow: none; }
+.runner-bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.runner-opt { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+.runner-opt input {
+  width: 74px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--panel); color: var(--text); font: inherit; font-size: 13.5px;
+}
+.runner-opt input:focus { outline: 2px solid var(--sage); outline-offset: 1px; }
+.runner-phase { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--muted); }
+.runner-phase.reset, .runner-phase.deploy, .runner-phase.train { color: var(--amber); }
+.runner-phase.done { color: var(--green); }
+.runner-phase.error { color: #c0392b; }
+.runner-steps { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.rstep {
+  font-size: 12.5px; font-weight: 600; padding: 6px 13px; border-radius: 999px;
+  background: var(--panel-3); color: var(--muted-2); border: 1px solid transparent;
+}
+.rstep.doing { background: var(--amber-soft); color: var(--amber); border-color: var(--amber); }
+.rstep.ok { background: var(--green-soft); color: var(--green); }
+.rstep.bad { background: #c0392b18; color: #c0392b; }
+.runner-log {
+  margin: 14px 0 0; max-height: 260px; overflow: auto; background: #0d120f;
+  color: var(--cream); border-radius: 10px; padding: 13px 15px;
+  font-family: ui-monospace, Consolas, monospace; font-size: 12px; line-height: 1.6;
+  white-space: pre-wrap; word-break: break-word;
 }
