@@ -174,17 +174,9 @@ async function renderEvents() {
     RewardDistributed: "ev-reward",
     NodeRegistered: "ev-reg",
   };
-  const evIcon = {
-    WeightsSubmitted: "📤",
-    ModelAggregated: "⚙️",
-    RewardDistributed: "🪙",
-    NodeRegistered: "🆕",
-  };
-
   logs.sort((x, y) => y.block - x.block);
   box.innerHTML = logs.slice(0, 40).map((l) =>
     `<div class="ev ${evClass[l.name] || ""}">
-      <span>${evIcon[l.name] || "•"}</span>
       <span class="t">${l.name}</span><span class="d">${l.text}</span>
     </div>`).join("")
     || `<div class="hint">Chưa có sự kiện nào.</div>`;

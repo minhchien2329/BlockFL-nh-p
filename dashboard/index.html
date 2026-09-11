@@ -50,34 +50,34 @@
     <section class="meta" id="meta"></section>
 
     <section class="cards">
-      <div class="card"><div class="k">🔄 Round hiện tại</div><div class="v" id="c-round">–</div></div>
-      <div class="card"><div class="k">🧩 Số node tham gia</div><div class="v" id="c-nodes">–</div></div>
-      <div class="card"><div class="k">🪙 Tổng BFL đã thưởng</div><div class="v" id="c-token">–</div></div>
-      <div class="card"><div class="k">🎯 Độ chính xác mới nhất</div><div class="v" id="c-acc">–</div></div>
+      <div class="card"><div class="k">Round hiện tại</div><div class="v" id="c-round">–</div></div>
+      <div class="card"><div class="k">Số node tham gia</div><div class="v" id="c-nodes">–</div></div>
+      <div class="card"><div class="k">Tổng BFL đã thưởng</div><div class="v" id="c-token">–</div></div>
+      <div class="card"><div class="k">Độ chính xác mới nhất</div><div class="v" id="c-acc">–</div></div>
     </section>
 
     <section class="panel">
-      <h2><span class="ico">🧭</span>Chọn một mục bên sidebar để xem chi tiết</h2>
+      <h2>Chọn một mục bên sidebar để xem chi tiết</h2>
       <p class="hint">Mỗi mục tương ứng một tầng của hệ thống CPS (IoT → AI → Blockchain)</p>
       <div class="quicklinks">
         <a class="qlink" href="iot.html">
-          <b>📡 Dữ liệu IoT</b>
+          <b>Dữ liệu IoT</b>
           <span>Dữ liệu nhịp tim, SpO2, nhiệt độ cơ thể mô phỏng cho từng edge node (đại diện 4 bệnh viện/trạm quan trắc khác nhau), được chia theo phân phối Dirichlet để mô phỏng đúng bài toán Federated Learning thực tế — mỗi node có tỉ lệ ca bất thường lệch nhau (non-IID).</span>
         </a>
         <a class="qlink" href="ai.html">
-          <b>🧠 Hội tụ AI</b>
+          <b>Hội tụ AI</b>
           <span>Theo dõi độ chính xác (accuracy) và F1-score của mô hình phân loại bất thường sau mỗi round huấn luyện FedAvg, chứng minh Global Model hội tụ tốt dần qua thời gian dù dữ liệu bị phân tán và không đồng nhất giữa các node.</span>
         </a>
         <a class="qlink" href="rounds.html">
-          <b>⛓️ Round on-chain</b>
+          <b>Round on-chain</b>
           <span>Toàn bộ lịch sử các round: số node đã nộp trọng số (Δw), tổng số mẫu dữ liệu đóng góp, trạng thái đã tổng hợp (aggregate) hay chưa, và mã hash của global model — đọc trực tiếp từ smart contract FederatedAggregator, không qua trung gian.</span>
         </a>
         <a class="qlink" href="rewards.html">
-          <b>🪙 Token thưởng</b>
+          <b>Token thưởng</b>
           <span>Số dư token BFL (ERC-20) của từng node, được smart contract tự động mint theo tỉ lệ số mẫu dữ liệu đóng góp mỗi round — cơ chế khuyến khích node tham gia trung thực vào mạng Federated Learning.</span>
         </a>
         <a class="qlink" href="events.html">
-          <b>📜 Nhật ký sự kiện</b>
+          <b>Nhật ký sự kiện</b>
           <span>Nhật ký đầy đủ các sự kiện on-chain: WeightsSubmitted (nộp trọng số), ModelAggregated (chốt global model), RewardDistributed (phát thưởng) — ghi lại vĩnh viễn, không thể chỉnh sửa hay xoá, đảm bảo tính minh bạch của toàn hệ thống.</span>
         </a>
       </div>
