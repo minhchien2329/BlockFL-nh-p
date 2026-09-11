@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BlockFL · Tổng quan</title>
+  <title>BlockFL · Nhật ký sự kiện</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
 </head>
@@ -18,13 +18,13 @@
     </div>
 
     <nav class="sidenav">
-      <a href="index.html" class="active"><span class="ic">🏠</span><span class="lbl">Tổng quan</span></a>
+      <a href="index.html"><span class="ic">🏠</span><span class="lbl">Tổng quan</span></a>
       <div class="nav-group-label">Giám sát hệ thống</div>
       <a href="iot.html"><span class="ic">📡</span><span class="lbl">Dữ liệu IoT</span></a>
       <a href="ai.html"><span class="ic">🧠</span><span class="lbl">Hội tụ AI</span></a>
       <a href="rounds.html"><span class="ic">⛓️</span><span class="lbl">Round on-chain</span></a>
       <a href="rewards.html"><span class="ic">🪙</span><span class="lbl">Token thưởng</span></a>
-      <a href="events.html"><span class="ic">📜</span><span class="lbl">Nhật ký sự kiện</span></a>
+      <a href="events.html" class="active"><span class="ic">📜</span><span class="lbl">Nhật ký sự kiện</span></a>
     </nav>
 
     <div class="sidebar-foot">
@@ -37,8 +37,8 @@
     <header>
       <div class="brand">
         <div>
-          <h1>Tổng quan <span>· BlockFL Dashboard</span></h1>
-          <p>Học liên kết (Federated Learning) bảo mật dữ liệu cảm biến, tích hợp Blockchain — giám sát round huấn luyện &amp; token thưởng theo thời gian thực</p>
+          <h1>Nhật ký sự kiện <span>· Tầng Blockchain</span></h1>
+          <p>Log bất biến — mọi thao tác của node/aggregator đều được ghi lại vĩnh viễn trên chain</p>
         </div>
       </div>
       <button id="btn-wallet">Kết nối MetaMask</button>
@@ -54,15 +54,9 @@
     </section>
 
     <section class="panel">
-      <h2><span class="ico">🧭</span>Chọn một mục bên sidebar để xem chi tiết</h2>
-      <p class="hint">Mỗi mục tương ứng một tầng của hệ thống CPS (IoT → AI → Blockchain)</p>
-      <div class="quicklinks">
-        <a class="qlink" href="iot.html"><b>📡 Dữ liệu IoT</b><span>Xem dữ liệu cảm biến mô phỏng, phân bố non-IID từng node</span></a>
-        <a class="qlink" href="ai.html"><b>🧠 Hội tụ AI</b><span>Biểu đồ accuracy/F1 của Global Model qua từng round FedAvg</span></a>
-        <a class="qlink" href="rounds.html"><b>⛓️ Round on-chain</b><span>Lịch sử round đọc trực tiếp từ smart contract</span></a>
-        <a class="qlink" href="rewards.html"><b>🪙 Token thưởng</b><span>Đóng góp và số dư token BFL của từng node</span></a>
-        <a class="qlink" href="events.html"><b>📜 Nhật ký sự kiện</b><span>Log bất biến mọi thao tác on-chain</span></a>
-      </div>
+      <h2><span class="ico">📜</span>Nhật ký sự kiện on-chain<span class="src-tag chain">Tầng Blockchain</span></h2>
+      <p class="hint">Log bất biến — mọi thao tác của node/aggregator đều được ghi lại vĩnh viễn trên chain</p>
+      <div id="events" class="events"></div>
     </section>
 
     <footer>

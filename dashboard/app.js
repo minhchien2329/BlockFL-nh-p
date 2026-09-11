@@ -28,8 +28,9 @@ async function loadPreview() {
 }
 
 function renderPreview(pv) {
-  const feats = pv.features;
   const box = $("#data-grid");
+  if (!box) return; // trang này không có phần dữ liệu IoT
+  const feats = pv.features;
   box.innerHTML = pv.nodes.map((n) => {
     const statRows = feats.map((f) => {
       const a = n.stats_normal[f], b = n.stats_anomaly[f];
@@ -84,67 +85,79 @@ async function connect() {
     <span>minNodes: <b>${deployment.minNodes}</b></span>`;
 }
 
+// Mỗi trang chỉ có một phần nội dung (data-grid / chart / rounds / nodes / events) —
+// mọi thao tác cập nhật DOM bên dưới đều tự bỏ qua khi phần tử không tồn tại trên trang.
 async function refresh() {
   const currentRound = Number(await agg.currentRound());
   const nodes = deployment.nodes;
 
-  // --- thẻ tổng quan ---
-  $("#c-round").textContent = currentRound;
-  $("#c-nodes").textContent = nodes.length;
+  // --- thẻ tổng quan (xuất hiện trên mọi trang) ---
+  if ($("#c-round")) $("#c-round").textContent = currentRound;
+  if ($("#c-nodes")) $("#c-nodes").textContent = nodes.length;
 
   const balances = await Promise.all(nodes.map((a) => token.balanceOf(a)));
   const totalToken = balances.reduce((s, b) => s + b, 0n);
-  $("#c-token").textContent = (+ethers.formatUnits(totalToken, 18)).toFixed(1) + " BFL";
+  if ($("#c-token")) $("#c-token").textContent = (+ethers.formatUnits(totalToken, 18)).toFixed(1) + " BFL";
 
-  // --- lịch sử round on-chain (tải song song, đổi DOM 1 lần) ---
-  const roundIdx = [];
-  for (let r = 1; r < Math.max(currentRound, 1); r++) roundIdx.push(r);
-  const roundData = await Promise.all(roundIdx.map((r) => agg.getRound(r)));
+  const roundsBody = $("#rounds tbody");
+  const nodesBody = $("#nodes tbody");
   const lastSamples = {};
-  await Promise.all(
-    roundIdx.map(async (r, k) => {
-      const submitters = roundData[k][4];
-      const subs = await Promise.all(submitters.map((s) => agg.getSubmission(r, s)));
-      submitters.forEach((s, j) => (lastSamples[s] = Number(subs[j][1])));
-    })
-  );
-  const rowsHtml = roundIdx.map((r, k) => {
-    const [ghash, totalSamples, count, aggregated] = roundData[k];
-    return `<tr><td>${r}</td><td>${count}</td><td>${totalSamples}</td>
-      <td>${aggregated ? '<span class="badge ok">✓ xong</span>' : '<span class="badge wait">chờ</span>'}</td>
-      <td class="hash">${hx(ghash)}</td></tr>`;
-  });
-  $("#rounds tbody").innerHTML = rowsHtml.join("") ||
-    `<tr><td colspan="5" class="hint">Chưa có round nào hoàn tất. Chạy <code>python run_demo.py</code>.</td></tr>`;
+
+  if (roundsBody || nodesBody) {
+    // --- lịch sử round on-chain (tải song song, đổi DOM 1 lần) ---
+    const roundIdx = [];
+    for (let r = 1; r < Math.max(currentRound, 1); r++) roundIdx.push(r);
+    const roundData = await Promise.all(roundIdx.map((r) => agg.getRound(r)));
+    await Promise.all(
+      roundIdx.map(async (r, k) => {
+        const submitters = roundData[k][4];
+        const subs = await Promise.all(submitters.map((s) => agg.getSubmission(r, s)));
+        submitters.forEach((s, j) => (lastSamples[s] = Number(subs[j][1])));
+      })
+    );
+    if (roundsBody) {
+      const rowsHtml = roundIdx.map((r, k) => {
+        const [ghash, totalSamples, count, aggregated] = roundData[k];
+        return `<tr><td>${r}</td><td>${count}</td><td>${totalSamples}</td>
+          <td>${aggregated ? '<span class="badge ok">✓ xong</span>' : '<span class="badge wait">chờ</span>'}</td>
+          <td class="hash">${hx(ghash)}</td></tr>`;
+      });
+      roundsBody.innerHTML = rowsHtml.join("") ||
+        `<tr><td colspan="5" class="hint">Chưa có round nào hoàn tất. Chạy <code>python run_demo.py</code>.</td></tr>`;
+    }
+  }
 
   // --- bảng node ---
-  const maxBal = balances.reduce((m, b) => (b > m ? b : m), 1n);
-  $("#nodes tbody").innerHTML = nodes.map((addr, i) => {
-    const bal = +ethers.formatUnits(balances[i], 18);
-    const pct = maxBal > 0n ? Number((balances[i] * 100n) / maxBal) : 0;
-    return `<tr><td>node ${i}</td><td class="mono">${short(addr)}</td>
-      <td>${lastSamples[addr] ?? "–"}</td>
-      <td><b>${bal.toFixed(2)}</b></td>
-      <td><div class="bar"><i style="width:${pct}%"></i></div></td></tr>`;
-  }).join("");
+  if (nodesBody) {
+    const maxBal = balances.reduce((m, b) => (b > m ? b : m), 1n);
+    nodesBody.innerHTML = nodes.map((addr, i) => {
+      const bal = +ethers.formatUnits(balances[i], 18);
+      const pct = maxBal > 0n ? Number((balances[i] * 100n) / maxBal) : 0;
+      return `<tr><td>node ${i}</td><td class="mono">${short(addr)}</td>
+        <td>${lastSamples[addr] ?? "–"}</td>
+        <td><b>${bal.toFixed(2)}</b></td>
+        <td><div class="bar"><i style="width:${pct}%"></i></div></td></tr>`;
+    }).join("");
+  }
 
   // --- sự kiện ---
-  await renderEvents();
+  if ($("#events")) await renderEvents();
 
   // --- biểu đồ hội tụ ---
   const results = await loadResults();
   if (results && results.history?.length) {
     const hist = results.history;
     const acc = hist[hist.length - 1].acc;
-    $("#c-acc").textContent = (acc * 100).toFixed(1) + "%";
-    drawChart(hist, results.baseline);
-  } else {
+    if ($("#c-acc")) $("#c-acc").textContent = (acc * 100).toFixed(1) + "%";
+    if ($("#chart")) drawChart(hist, results.baseline);
+  } else if ($("#c-acc")) {
     $("#c-acc").textContent = "–";
   }
 }
 
 async function renderEvents() {
   const box = $("#events");
+  if (!box) return;
   const logs = [];
   const pull = async (name, fmt) => {
     const evs = await agg.queryFilter(name, 0, "latest");
@@ -179,6 +192,7 @@ async function renderEvents() {
 
 // Vẽ biểu đồ đường bằng SVG thuần (không phụ thuộc thư viện ngoài)
 function drawChart(hist, baseline) {
+  if (!$("#chart")) return;
   const W = 720, H = 240, PL = 44, PR = 16, PT = 16, PB = 30;
   const xs = [0, ...hist.map((h) => h.round)];
   const acc = [baseline?.acc ?? hist[0].acc, ...hist.map((h) => h.acc)].map((v) => v * 100);
@@ -217,30 +231,21 @@ $("#btn-wallet").addEventListener("click", async () => {
   } catch (e) { alert("Lỗi kết nối ví: " + e.message); }
 });
 
-// Tô sáng mục sidebar tương ứng với panel đang hiện trong khung nhìn
-function initSidenavSpy() {
-  const links = [...document.querySelectorAll(".sidenav a")];
-  const map = new Map(links.map((a) => [a.dataset.target, a]));
-  const setActive = (id) => {
-    links.forEach((a) => a.classList.toggle("active", a.dataset.target === id));
-  };
-  const io = new IntersectionObserver(
-    (entries) => {
-      const visible = entries.filter((e) => e.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-      if (visible[0]) setActive(visible[0].target.id);
-    },
-    { rootMargin: "0px 0px -55% 0px", threshold: [0, .1, .25, .5, .75, 1] }
-  );
-  for (const id of map.keys()) {
-    const el = document.getElementById(id);
-    if (el) io.observe(el);
+// Nút thu gọn sidebar (chỉ còn icon) — nhớ trạng thái qua các lần chuyển trang
+function initSidebarToggle() {
+  const btn = $("#sidebar-toggle");
+  if (!btn) return;
+  if (localStorage.getItem("bfl_sidebar_collapsed") === "1") {
+    document.body.classList.add("collapsed");
   }
-  if (links[0]) links[0].classList.add("active");
+  btn.addEventListener("click", () => {
+    document.body.classList.toggle("collapsed");
+    localStorage.setItem("bfl_sidebar_collapsed", document.body.classList.contains("collapsed") ? "1" : "0");
+  });
 }
 
 async function boot() {
-  initSidenavSpy();
+  initSidebarToggle();
   try {
     await connect();
     await loadPreview();
