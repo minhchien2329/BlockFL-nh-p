@@ -202,11 +202,11 @@ function renderConfig(results) {
   const c = results?.config;
   if (!c) { box.innerHTML = `<p class="hint">Chưa có <code>results.json</code> — chạy <code>python run_demo.py</code>.</p>`; return; }
   const items = [
-    ["Số round huấn luyện", c.rounds, "Mỗi round = 1 vòng local training + 1 lần FedAvg + 1 lần chốt on-chain"],
-    ["Số edge node", c.n_nodes, "Mỗi node giữ dữ liệu riêng, không chia sẻ dữ liệu thô"],
-    ["Dirichlet <span class=\"nocaps\">α</span>", c.dirichlet_alpha, "α càng nhỏ → dữ liệu giữa các node càng lệch nhau (non-IID càng mạnh)"],
-    ["Epoch cục bộ", c.epochs, "Số vòng mỗi node train trên dữ liệu của mình trước khi nộp Δw"],
-    ["Learning rate", c.lr, "Tốc độ học của SGD tại từng node"],
+    ["Số round huấn luyện", c.rounds, "1 local training + 1 FedAvg + 1 chốt on-chain"],
+    ["Số edge node", c.n_nodes, "Dữ liệu riêng, không chia sẻ dữ liệu thô"],
+    ["Dirichlet <span class=\"nocaps\">α</span>", c.dirichlet_alpha, "Càng nhỏ → non-IID giữa node càng mạnh"],
+    ["Epoch cục bộ", c.epochs, "Số vòng train trước khi nộp Δw"],
+    ["Learning rate", c.lr, "Tốc độ học SGD tại từng node"],
     ["Ghi lên blockchain", c.chain ? "Có" : "Không", c.chain ? `Mạng ${c.network}` : "Chế độ --no-chain, chỉ chạy FL"],
   ];
   box.innerHTML = items.map(([k, v, note]) =>
