@@ -194,7 +194,7 @@ function drawChart(hist, baseline) {
   const Y = (v) => PT + (1 - v / 100) * (H - PT - PB);
   const path = (arr) => arr.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join(" ");
   const dots = (arr, c) => arr.map((v, i) => `<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="3" fill="${c}"/>`).join("");
-  const cAcc = "#4f6b60", cF1 = "#3f8f63", cGrid = "#e8f0e7", cLbl = "#8fa89c";
+  const cAcc = "#3a6fa8", cF1 = "#3f8f63", cGrid = "#e8f0e7", cLbl = "#8fa89c";
   const grid = [0, 25, 50, 75, 100].map((g) =>
     `<line x1="${PL}" y1="${Y(g)}" x2="${W - PR}" y2="${Y(g)}" stroke="${cGrid}"/>
      <text x="${PL - 8}" y="${Y(g) + 4}" fill="${cLbl}" font-size="13" text-anchor="end">${g}</text>`).join("");
