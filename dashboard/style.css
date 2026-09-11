@@ -1,33 +1,33 @@
 :root {
-  /* bảng màu gốc (designervn.net) */
-  --periwinkle: #acb7f2;
-  --blue: #80bdf2;
-  --skyblue: #a2cdf2;
-  --slate: #a9c6d9;
-  --peach: #f2e2dc;
+  /* bảng màu gốc (coolors.co) */
+  --sage-dark: #5d7b6f;
+  --sage: #a4c3a2;
+  --mint: #b0d4b8;
+  --cream: #eae7d6;
+  --pale-cyan: #d7f9fa;
 
   /* token giao diện — dẫn xuất từ bảng màu trên, có chỉnh độ đậm để đủ tương phản trên nền sáng */
-  --bg: #f5f8fc;
+  --bg: #f7f6f0;
   --panel: #ffffff;
-  --panel-2: #eef5fc;
-  --panel-3: #e3edf9;
-  --line: #dbe6f1;
-  --line-soft: #e7eff8;
-  --text: #263252;
-  --muted: #5d6c89;
-  --muted-2: #90a0bc;
+  --panel-2: #eaf9fa;
+  --panel-3: #efece0;
+  --line: #dce6dc;
+  --line-soft: #e8f0e7;
+  --text: #2c3a33;
+  --muted: #5f7268;
+  --muted-2: #95a69c;
 
-  --accent: #2f6cb3;
-  --accent-soft: #80bdf230;
-  --green: #2ea373;
-  --green-soft: #2ea37320;
-  --amber: #b96b34;
-  --amber-soft: #f2e2dc80;
-  --purple: #6a72d9;
-  --purple-soft: #acb7f235;
+  --accent: #4f6b60;
+  --accent-soft: #a4c3a233;
+  --green: #3f8f63;
+  --green-soft: #3f8f6320;
+  --amber: #ad7c4b;
+  --amber-soft: #eae7d690;
+  --purple: #2e8b90;
+  --purple-soft: #d7f9fa90;
 
   --radius: 12px;
-  --shadow: 0 1px 2px rgba(38, 49, 77, .06), 0 10px 24px -14px rgba(38, 49, 77, .22);
+  --shadow: 0 1px 2px rgba(44, 58, 51, .06), 0 10px 24px -14px rgba(44, 58, 51, .22);
 }
 
 * { box-sizing: border-box; }
@@ -53,7 +53,7 @@ header {
 .brand { display: flex; gap: 12px; align-items: flex-start; }
 .brand .logo {
   width: 42px; height: 42px; border-radius: 11px; flex: none;
-  background: linear-gradient(135deg, var(--blue), var(--periwinkle));
+  background: linear-gradient(135deg, var(--sage), var(--mint));
   display: flex; align-items: center; justify-content: center;
   font-size: 20px; box-shadow: var(--shadow);
 }
@@ -97,7 +97,7 @@ button:disabled { opacity: .55; cursor: default; transform: none; }
   background: var(--panel); border: 1px solid var(--line); padding: 6px 12px;
   border-radius: 999px; transition: all .15s;
 }
-.quicknav a:hover { color: var(--accent); border-color: var(--blue); background: var(--accent-soft); }
+.quicknav a:hover { color: var(--accent); border-color: var(--sage); background: var(--accent-soft); }
 
 /* ---------- Meta strip ---------- */
 .meta {
@@ -120,15 +120,15 @@ button:disabled { opacity: .55; cursor: default; transform: none; }
   padding: 16px 18px; box-shadow: var(--shadow); position: relative; overflow: hidden;
   transition: transform .15s, border-color .15s;
 }
-.card:hover { transform: translateY(-2px); border-color: var(--slate); }
+.card:hover { transform: translateY(-2px); border-color: var(--sage-dark); }
 .card::before {
   content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
   background: var(--accent-color, var(--accent));
 }
-.card:nth-child(1) { --accent-color: var(--blue); }
+.card:nth-child(1) { --accent-color: var(--sage); }
 .card:nth-child(2) { --accent-color: var(--green); }
 .card:nth-child(3) { --accent-color: var(--amber); }
-.card:nth-child(4) { --accent-color: var(--periwinkle); }
+.card:nth-child(4) { --accent-color: var(--mint); }
 .card .k {
   color: var(--muted); font-size: 11.5px; font-weight: 600; text-transform: uppercase;
   letter-spacing: .05em; display: flex; align-items: center; gap: 6px;
@@ -175,7 +175,7 @@ td.mono, .hash { font-family: ui-monospace, Consolas, monospace; font-size: 12px
 .badge.wait { background: var(--amber-soft); color: var(--amber); }
 
 .bar { height: 8px; background: var(--panel-3); border-radius: 4px; overflow: hidden; min-width: 120px; }
-.bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--blue), var(--periwinkle)); border-radius: 4px; }
+.bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--sage), var(--mint)); border-radius: 4px; }
 
 /* ---------- Chart ---------- */
 #chart svg { display: block; width: 100%; max-height: 300px; }
@@ -189,7 +189,7 @@ td.mono, .hash { font-family: ui-monospace, Consolas, monospace; font-size: 12px
   background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px;
   padding: 14px 16px; transition: border-color .15s;
 }
-.dcard:hover { border-color: var(--slate); }
+.dcard:hover { border-color: var(--sage-dark); }
 .dhead { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
 .dhead b { font-size: 14.5px; color: var(--text); }
 .dhead span { color: var(--muted); font-size: 11.5px; }
