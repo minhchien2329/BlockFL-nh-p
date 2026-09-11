@@ -108,7 +108,8 @@ body.collapsed .collapse-btn { transform: rotate(180deg); }
 
 /* ---------- Main content ---------- */
 .main {
-  margin-left: var(--sidebar-w); padding: 36px 48px 70px;
+  --main-px: 48px;
+  margin-left: var(--sidebar-w); padding: 36px var(--main-px) 0;
   transition: margin-left .18s ease;
 }
 body.collapsed .main { margin-left: var(--sidebar-w-collapsed); }
@@ -270,8 +271,9 @@ table.dtable th { color: var(--muted); font-weight: 600; }
 
 /* ---------- Footer ---------- */
 footer {
-  color: #b9c8bf; font-size: 13px; text-align: left; margin-top: 28px;
-  background: #10170f; border-radius: var(--radius); padding: 20px 26px;
+  color: #c3d3c9; font-size: 13px; text-align: left; margin: 40px calc(-1 * var(--main-px)) 0;
+  width: calc(100% + 2 * var(--main-px)); background: #17281c;
+  padding: 24px var(--main-px) 34px;
 }
 .foot-line { margin: 0 0 7px; }
 .foot-line:last-child { margin-bottom: 0; }
