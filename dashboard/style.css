@@ -269,6 +269,10 @@ table.dtable th { color: var(--muted); font-weight: 600; }
 
 /* ---------- Footer ---------- */
 footer { color: var(--muted-2); font-size: 13px; text-align: center; margin-top: 24px; }
+.foot-line { margin: 0 0 6px; }
+.foot-line:last-child { margin-bottom: 0; }
+.foot-line b { color: var(--muted); font-weight: 600; }
+.foot-disclaimer { max-width: 62ch; margin-left: auto; margin-right: auto; font-size: 12px; line-height: 1.6; }
 .err { color: #c0392b; }
 
 @media (max-width: 900px) {

@@ -188,6 +188,10 @@ async function refresh() {
   } else if ($("#c-acc")) {
     $("#c-acc").textContent = "–";
   }
+
+  if ($("#last-updated")) {
+    $("#last-updated").textContent = new Date().toLocaleTimeString("vi-VN");
+  }
 }
 
 /* ---------------------------------------------------- cấu hình thí nghiệm (A1)
