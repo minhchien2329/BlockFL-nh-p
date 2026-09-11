@@ -157,10 +157,7 @@ button:disabled { opacity: .55; cursor: default; transform: none; }
 
 
 /* ---------- Stat cards ---------- */
-.cards {
-  display: flex; margin-bottom: 26px;
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-}
+.cards { display: flex; margin-bottom: 26px; }
 .card {
   flex: 1; background: transparent; padding: 16px 24px;
 }
