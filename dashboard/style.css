@@ -274,12 +274,8 @@ table.dtable th { color: var(--muted); font-weight: 600; }
 .events { display: flex; flex-direction: column; gap: 8px; max-height: 420px; overflow-y: auto; padding-right: 4px; }
 .ev {
   display: flex; gap: 12px; align-items: center; font-size: 13.5px; padding: 11px 14px;
-  background: var(--panel-2); border-radius: 9px; border-left: 4px solid var(--line);
+  background: var(--panel-2); border-radius: 9px;
 }
-.ev.ev-submit { border-left-color: var(--accent); }
-.ev.ev-agg { border-left-color: var(--purple); }
-.ev.ev-reward { border-left-color: var(--green); }
-.ev.ev-reg { border-left-color: var(--amber); }
 .ev .t { color: var(--text); font-weight: 700; min-width: 165px; font-size: 12.5px; text-transform: uppercase; letter-spacing: .02em; }
 .ev .d { color: var(--muted); font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; }
 
@@ -311,7 +307,6 @@ footer { color: var(--muted-2); font-size: 13px; text-align: center; margin-top:
 .note {
   margin: 14px 0 0; padding: 13px 16px; font-size: 13.5px; line-height: 1.65;
   color: var(--muted); background: var(--panel-2); border-radius: 10px;
-  border-left: 3px solid var(--purple);
 }
 .note b { color: var(--text); font-weight: 600; }
 .note code { background: var(--panel-3); padding: 1px 7px; border-radius: 5px; color: var(--accent); font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; }
@@ -359,9 +354,6 @@ a.tx:hover { text-decoration: underline; }
 /* ---------- Sơ đồ kiến trúc CPS ---------- */
 .arch { display: flex; flex-direction: column; }
 .arch-band { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
-.band-iot { border-left: 4px solid var(--green); }
-.band-ai { border-left: 4px solid var(--accent); }
-.band-chain { border-left: 4px solid var(--purple); }
 .band-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 15px; }
 .band-head b { font-size: 17px; color: var(--text); }
 .band-sub { color: var(--muted); font-size: 13px; }
