@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlockFL · Kiến trúc CPS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-left">
+        <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg></div>
+        <div class="sidebar-title">BlockFL</div>
+      </div>
+      <button class="collapse-btn" id="sidebar-toggle" title="Thu gọn sidebar">«</button>
+    </div>
+
+    <nav class="sidenav">
+      <a href="index.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5Z"/></svg></span><span class="lbl">Tổng quan</span></a>
+      <a href="architecture.html" class="active"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="8.5" y="14" width="7" height="7" rx="1.5"/><path d="M6.5 10v2.5h11V10M12 12.5V14"/></svg></span><span class="lbl">Kiến trúc CPS</span></a>
+      <div class="nav-group-label">Giám sát hệ thống</div>
+      <a href="iot.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><span class="lbl">Dữ liệu IoT</span></a>
+      <a href="ai.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></span><span class="lbl">Hội tụ AI</span></a>
+      <a href="rounds.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg></span><span class="lbl">Round on-chain</span></a>
+      <a href="rewards.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6.5"/><path d="M17 8.5A6.5 6.5 0 1 1 8.7 21.7"/></svg></span><span class="lbl">Token thưởng</span></a>
+      <a href="events.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span><span class="lbl">Nhật ký sự kiện</span></a>
+      <a href="contract.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6l-4-4z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h4"/><circle cx="12" cy="10" r="0"/></svg></span><span class="lbl">Smart Contract</span></a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <span id="dot" class="dot off"></span>
+      <span id="conn-text">Đang kết nối…</span>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header>
+      <div class="brand">
+        <div>
+          <h1>Kiến trúc CPS</h1>
+          <p>Ba tầng IoT → AI → Blockchain ghép lại thành một hệ thống thực-ảo: ai làm gì, dữ liệu nào đi đâu, và vì sao chia việc như vậy</p>
+        </div>
+      </div>
+      <button id="btn-wallet">Kết nối MetaMask</button>
+    </header>
+    <section class="panel">
+      <h2>Ba tầng và thứ tự dữ liệu đi qua chúng</h2>
+      <p class="hint">Điểm mấu chốt: dữ liệu cảm biến thô <b>không bao giờ rời khỏi node</b> — thứ đi lên trên chỉ là trọng số và mã băm 32 byte</p>
+
+      <div class="arch">
+        <div class="arch-band band-iot">
+          <div class="band-head">
+            <span class="band-tag iot">Tầng IoT</span>
+            <b>Thu thập tại biên</b>
+            <span class="band-sub">4 edge node · 850 mẫu · nhịp tim, SpO₂, nhiệt độ</span>
+          </div>
+          <div class="band-body" id="arch-nodes"></div>
+          <p class="band-note">Mỗi node đại diện một bệnh viện/trạm quan trắc. Dữ liệu chia theo phân phối Dirichlet nên tỉ lệ ca bất thường giữa các node lệch nhau (non-IID) — giống thực tế, khác hẳn dữ liệu chia đều trong bài tập.</p>
+        </div>
+
+        <div class="arch-flow">
+          <div class="flow-arrow">▼</div>
+          <div class="flow-what">
+            <b>Δw — trọng số mô hình sau khi train cục bộ</b>
+            <span>KHÔNG phải dữ liệu bệnh nhân. Một mảng số thực, không thể đọc ngược ra nhịp tim của ai.</span>
+          </div>
+        </div>
+
+        <div class="arch-band band-ai">
+          <div class="band-head">
+            <span class="band-tag ai">Tầng AI</span>
+            <b>Học liên kết (FedAvg)</b>
+            <span class="band-sub">huấn luyện cục bộ 5 epoch → trung bình có trọng số</span>
+          </div>
+          <div class="band-body">
+            <div class="abox">
+              <b>1 · Local training</b>
+              <span>Mỗi node nhận global model, train SGD trên dữ liệu của riêng mình</span>
+              <code>ai_model/local_train.py → local_update()</code>
+            </div>
+            <div class="abox">
+              <b>2 · FedAvg</b>
+              <span>Trung bình các Δw, mỗi node có trọng số theo số mẫu nó đóng góp</span>
+              <code>ai_model/fedavg.py → fedavg()</code>
+            </div>
+            <div class="abox">
+              <b>3 · Băm kết quả</b>
+              <span>keccak256 của global model mới → 32 byte duy nhất đại diện cho nó</span>
+              <code>ai_model/fedavg.py → weights_hash()</code>
+            </div>
+          </div>
+          <p class="band-note">FedAvg chạy <b>off-chain</b> vì tính trung bình vài nghìn số thực trên EVM vừa đắt vừa không cần thiết. Chuỗi không cần tự tính — nó chỉ cần <b>chứng nhận</b> kết quả nào đã được chốt.</p>
+        </div>
+
+        <div class="arch-flow">
+          <div class="flow-arrow">▼</div>
+          <div class="flow-what">
+            <b>keccak256(Δw) — đúng 32 byte lên chuỗi</b>
+            <span>Trọng số thật nằm ở file <code>.npy</code>; chuỗi chỉ giữ dấu vân tay của nó.</span>
+          </div>
+        </div>
+
+        <div class="arch-band band-chain">
+          <div class="band-head">
+            <span class="band-tag chain">Tầng Blockchain</span>
+            <b>Xác thực &amp; điều phối</b>
+            <span class="band-sub">2 smart contract trên Hardhat/EVM</span>
+          </div>
+          <div class="band-body">
+            <div class="abox">
+              <b>FederatedAggregator</b>
+              <span>Nhận hash Δw theo round, chốt global model khi đủ node, phát thưởng theo tỉ lệ đóng góp</span>
+              <code id="arch-agg">–</code>
+            </div>
+            <div class="abox">
+              <b>BlockFLToken (ERC-20)</b>
+              <span>Token BFL — chỉ Aggregator được quyền mint, không ai tự phát cho mình</span>
+              <code id="arch-token">–</code>
+            </div>
+            <div class="abox">
+              <b>Sự kiện bất biến</b>
+              <span>WeightsSubmitted · ModelAggregated · RewardDistributed — ghi vĩnh viễn, không xoá được</span>
+              <code><span id="arch-events">–</span> sự kiện đã ghi</code>
+            </div>
+          </div>
+          <p class="band-note">Vì hash đã nằm trên chuỗi, không node nào có thể chối "tôi không nộp bản đó", và không ai sửa được file trọng số mà qua mặt được đối chứng ở trang <a href="rounds.html">Round on-chain</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Một round chạy qua những hàm nào</h2>
+      <p class="hint">Toàn bộ chuỗi lệnh cho <b>một</b> round, theo đúng thứ tự thực thi trong <code>run_demo.py</code></p>
+      <div class="steps">
+        <div class="step"><i>1</i><div><b>Chia dữ liệu non-IID</b><span>Dirichlet α = 0.4 quyết định mỗi node nhận bao nhiêu ca bất thường</span><code>iot_code/data_partition.py → partition_non_iid()</code></div></div>
+        <div class="step"><i>2</i><div><b>Mỗi node train cục bộ</b><span>5 epoch SGD trên dữ liệu của riêng nó, không nhìn thấy dữ liệu node khác</span><code>iot_code/edge_node.py → train_round()</code></div></div>
+        <div class="step"><i>3</i><div><b>Node nộp hash lên chuỗi</b><span>Giao dịch ký bằng khoá riêng của node — đây là chỗ "phân định trách nhiệm mật mã"</span><code>scripts/web3_interface.py → submit_weights() ⇒ FederatedAggregator.submitWeights()</code></div></div>
+        <div class="step"><i>4</i><div><b>Tổng hợp FedAvg off-chain</b><span>Trung bình Δw theo số mẫu, lưu file <code>.npy</code>, băm keccak256</span><code>ai_model/fedavg.py → fedavg() + weights_hash()</code></div></div>
+        <div class="step"><i>5</i><div><b>Owner chốt global model</b><span>Contract từ chối nếu số node nộp Δw chưa đạt <code class="inline">minNodes = <span id="arch-min">–</span></code>, hoặc round đã chốt rồi</span><code>FederatedAggregator.aggregate()</code></div></div>
+        <div class="step"><i>6</i><div><b>Phát token thưởng</b><span>Mint BFL tự động theo tỉ lệ số mẫu đóng góp, không ai duyệt tay</span><code>FederatedAggregator.distributeReward() ⇒ BlockFLToken.mint()</code></div></div>
+        <div class="step"><i>7</i><div><b>Mở round mới</b><span>Chỉ mở được sau khi round hiện tại đã aggregate</span><code>FederatedAggregator.advanceRound()</code></div></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Vì sao chia việc như vậy</h2>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">Dữ liệu thô ở đâu</div><div class="kv-v">Ở lại node</div><div class="kv-n">Đúng bài toán y tế: bệnh viện không được phép gửi hồ sơ bệnh nhân ra ngoài, nhưng vẫn muốn hưởng lợi từ mô hình chung</div></div>
+        <div class="kv"><div class="kv-k">Tính toán nặng</div><div class="kv-v">Off-chain</div><div class="kv-n">Train mạng nơ-ron trên EVM là bất khả thi về chi phí gas — chuỗi làm trọng tài, không làm máy tính</div></div>
+        <div class="kv"><div class="kv-k">Thứ đặt lên chuỗi</div><div class="kv-v">32 byte</div><div class="kv-n">Chỉ hash. Đủ để chứng minh "bản này đúng là bản đã chốt", mà không phình chi phí lưu trữ</div></div>
+      </div>
+    </section>
+
+    <footer>
+      <span id="refresh-info">Tự động làm mới mỗi 5 giây</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

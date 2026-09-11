@@ -154,19 +154,6 @@ button:hover { filter: brightness(1.12); transform: translateY(-1px); }
 button:active { transform: translateY(0); }
 button:disabled { opacity: .55; cursor: default; transform: none; }
 
-/* ---------- Meta strip ---------- */
-.meta {
-  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 16px 20px; margin-bottom: 22px; color: var(--muted);
-  font-size: 13.5px; display: flex; gap: 12px 32px; flex-wrap: wrap;
-}
-.meta span { display: flex; align-items: center; gap: 7px; }
-.meta b { color: var(--text); font-weight: 600; }
-.meta code, .hint code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
-.meta code {
-  background: var(--panel-3); padding: 3px 8px; border-radius: 6px; color: var(--accent);
-  font-size: 12.5px;
-}
 
 /* ---------- Stat cards ---------- */
 .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 26px; }
@@ -197,6 +184,7 @@ button:disabled { opacity: .55; cursor: default; transform: none; }
 .hint { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
 .hint code {
   background: var(--panel-3); padding: 1px 7px; border-radius: 5px; color: var(--muted);
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 .src-tag {
   display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700;

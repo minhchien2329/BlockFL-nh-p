@@ -95,11 +95,6 @@ async function connect() {
 
   $("#dot").className = "dot on";
   $("#conn-text").textContent = "Đã kết nối " + RPC_URL;
-  $("#meta").innerHTML = `
-    <span>Mạng: <b>${deployment.network}</b></span>
-    <span>Token BFL: <code>${short(deployment.token.address)}</code></span>
-    <span>Aggregator: <code>${short(deployment.aggregator.address)}</code></span>
-    <span>minNodes: <b>${deployment.minNodes}</b></span>`;
 }
 
 // Mỗi trang chỉ có một phần nội dung (data-grid / chart / rounds / nodes / events) —
@@ -476,14 +471,13 @@ function initSidebarToggle() {
   });
 }
 
-// Component dùng chung: dải "Mạng/Token/Aggregator" + 4 thẻ KPI.
+// Component dùng chung: 4 thẻ KPI (dải "Mạng/Token/Aggregator" đã bỏ hẳn).
 // Trước đây đoạn HTML này bị dán tay giống hệt nhau ở cả 6 trang; giờ chỉ
-// còn <div id="meta-cards"></div> trên mỗi trang, JS tự sinh nội dung vào đó.
-function renderMetaCardsSkeleton() {
-  const el = $("#meta-cards");
+// còn <div id="kpi-cards"></div> trên mỗi trang, JS tự sinh nội dung vào đó.
+function renderKpiCardsSkeleton() {
+  const el = $("#kpi-cards");
   if (!el) return;
   el.innerHTML = `
-    <section class="meta" id="meta"></section>
     <section class="cards">
       <div class="card"><div class="k">Round hiện tại</div><div class="v" id="c-round">–</div></div>
       <div class="card"><div class="k">Số node tham gia</div><div class="v" id="c-nodes">–</div></div>
@@ -493,7 +487,7 @@ function renderMetaCardsSkeleton() {
 }
 
 async function boot() {
-  renderMetaCardsSkeleton();
+  renderKpiCardsSkeleton();
   initSidebarToggle();
   initRunner();
   try {
