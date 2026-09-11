@@ -29,15 +29,15 @@
   --radius: 12px;
   --shadow: 0 1px 2px rgba(44, 58, 51, .06), 0 10px 24px -14px rgba(44, 58, 51, .22);
 
-  /* sidebar toàn chiều dọc màn hình — nền dùng đúng màu đậm nhất của bảng màu (#5D7B6F) */
+  /* sidebar toàn chiều dọc màn hình — nền đậm hơn màu #5D7B6F gốc một chút */
   --sidebar-w: 240px;
   --sidebar-w-collapsed: 72px;
-  --sidebar-bg: var(--sage-dark);
-  --sidebar-bg-hover: #6d8c7d;
-  --sidebar-bg-active: #4a6457;
-  --sidebar-border: #74907f;
+  --sidebar-bg: #3f5449;
+  --sidebar-bg-hover: #4f6a5a;
+  --sidebar-bg-active: #33453b;
+  --sidebar-border: #5a7466;
   --sidebar-text: var(--cream);
-  --sidebar-text-dim: #c4d4c6;
+  --sidebar-text-dim: #b6c6ba;
 }
 
 * { box-sizing: border-box; }
