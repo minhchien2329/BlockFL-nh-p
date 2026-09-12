@@ -9,151 +9,49 @@
   "nodes": [
     {
       "node_id": 0,
-      "n_train": 179,
-      "n_test": 60,
-      "n_normal": 110,
-      "n_anomaly": 69,
-      "anomaly_ratio": 0.385,
+      "n_train": 226,
+      "n_test": 75,
+      "n_normal": 64,
+      "n_anomaly": 162,
+      "anomaly_ratio": 0.717,
       "stats_normal": {
         "heart_rate": [
-          73.06,
-          7.12
+          74.38,
+          8.65
         ],
         "spo2": [
-          96.8,
-          1.13
+          97.1,
+          1.27
         ],
         "body_temp": [
-          36.71,
-          0.28
+          36.72,
+          0.29
         ],
         "hr_var": [
-          0.75,
-          0.55
+          0.87,
+          0.66
         ],
         "motion": [
-          0.49,
-          0.28
-        ]
-      },
-      "stats_anomaly": {
-        "heart_rate": [
-          94.17,
-          44.55
-        ],
-        "spo2": [
-          88.91,
-          3.12
-        ],
-        "body_temp": [
-          38.57,
-          0.56
-        ],
-        "hr_var": [
-          2.52,
-          1.61
-        ],
-        "motion": [
-          0.5,
-          0.27
-        ]
-      },
-      "sample_rows": [
-        {
-          "label": 0,
-          "heart_rate": 75.71,
-          "spo2": 97.61,
-          "body_temp": 37.1,
-          "hr_var": 1.66,
-          "motion": 0.54
-        },
-        {
-          "label": 0,
-          "heart_rate": 66.56,
-          "spo2": 97.05,
-          "body_temp": 36.34,
-          "hr_var": 0.24,
-          "motion": 0.49
-        },
-        {
-          "label": 0,
-          "heart_rate": 73.59,
-          "spo2": 97.06,
-          "body_temp": 36.18,
-          "hr_var": 0.42,
-          "motion": 0.57
-        },
-        {
-          "label": 1,
-          "heart_rate": 52.21,
-          "spo2": 88.2,
-          "body_temp": 38.79,
-          "hr_var": 4.59,
-          "motion": 0.49
-        },
-        {
-          "label": 1,
-          "heart_rate": 137.25,
-          "spo2": 89.91,
-          "body_temp": 39.3,
-          "hr_var": 0.49,
-          "motion": 0.75
-        },
-        {
-          "label": 1,
-          "heart_rate": 138.8,
-          "spo2": 87.88,
-          "body_temp": 38.66,
-          "hr_var": 7.37,
-          "motion": 0.75
-        }
-      ]
-    },
-    {
-      "node_id": 1,
-      "n_train": 241,
-      "n_test": 80,
-      "n_normal": 66,
-      "n_anomaly": 175,
-      "anomaly_ratio": 0.726,
-      "stats_normal": {
-        "heart_rate": [
-          74.9,
-          7.25
-        ],
-        "spo2": [
-          96.71,
-          1.09
-        ],
-        "body_temp": [
-          36.68,
-          0.31
-        ],
-        "hr_var": [
-          0.77,
-          0.61
-        ],
-        "motion": [
-          0.51,
+          0.54,
           0.29
         ]
       },
       "stats_anomaly": {
         "heart_rate": [
-          87.0,
-          45.49
+          89.66,
+          47.33
         ],
         "spo2": [
-          88.69,
-          2.88
+          88.88,
+          3.35
         ],
         "body_temp": [
-          38.61,
-          0.62
+          38.62,
+          0.55
         ],
         "hr_var": [
-          2.15,
-          1.63
+          2.27,
+          1.68
         ],
         "motion": [
           0.48,
@@ -163,77 +61,179 @@
       "sample_rows": [
         {
           "label": 0,
-          "heart_rate": 68.3,
-          "spo2": 96.21,
-          "body_temp": 36.7,
-          "hr_var": 0.88,
-          "motion": 0.86
+          "heart_rate": 67.95,
+          "spo2": 98.62,
+          "body_temp": 36.69,
+          "hr_var": 0.65,
+          "motion": 0.06
         },
         {
           "label": 0,
-          "heart_rate": 76.82,
-          "spo2": 97.16,
-          "body_temp": 36.76,
-          "hr_var": 0.15,
-          "motion": 0.21
-        },
-        {
-          "label": 0,
-          "heart_rate": 61.23,
-          "spo2": 98.83,
-          "body_temp": 36.59,
-          "hr_var": 0.31,
-          "motion": 0.94
-        },
-        {
-          "label": 1,
-          "heart_rate": 145.25,
-          "spo2": 84.98,
-          "body_temp": 38.64,
-          "hr_var": 3.09,
+          "heart_rate": 61.49,
+          "spo2": 99.0,
+          "body_temp": 37.23,
+          "hr_var": 1.78,
           "motion": 0.25
         },
         {
-          "label": 1,
-          "heart_rate": 46.36,
-          "spo2": 94.31,
-          "body_temp": 38.39,
-          "hr_var": 3.0,
-          "motion": 0.14
+          "label": 0,
+          "heart_rate": 66.75,
+          "spo2": 97.81,
+          "body_temp": 36.63,
+          "hr_var": 0.68,
+          "motion": 0.86
         },
         {
           "label": 1,
-          "heart_rate": 54.0,
-          "spo2": 90.45,
-          "body_temp": 39.14,
-          "hr_var": 1.96,
-          "motion": 0.33
+          "heart_rate": 32.13,
+          "spo2": 85.48,
+          "body_temp": 38.3,
+          "hr_var": 1.33,
+          "motion": 0.09
+        },
+        {
+          "label": 1,
+          "heart_rate": 51.51,
+          "spo2": 86.97,
+          "body_temp": 38.52,
+          "hr_var": 1.78,
+          "motion": 0.9
+        },
+        {
+          "label": 1,
+          "heart_rate": 129.67,
+          "spo2": 85.75,
+          "body_temp": 38.93,
+          "hr_var": 5.5,
+          "motion": 0.11
+        }
+      ]
+    },
+    {
+      "node_id": 1,
+      "n_train": 368,
+      "n_test": 122,
+      "n_normal": 297,
+      "n_anomaly": 71,
+      "anomaly_ratio": 0.193,
+      "stats_normal": {
+        "heart_rate": [
+          75.1,
+          8.15
+        ],
+        "spo2": [
+          97.03,
+          1.18
+        ],
+        "body_temp": [
+          36.71,
+          0.29
+        ],
+        "hr_var": [
+          0.82,
+          0.63
+        ],
+        "motion": [
+          0.48,
+          0.29
+        ]
+      },
+      "stats_anomaly": {
+        "heart_rate": [
+          99.43,
+          43.98
+        ],
+        "spo2": [
+          89.12,
+          3.12
+        ],
+        "body_temp": [
+          38.69,
+          0.59
+        ],
+        "hr_var": [
+          1.95,
+          1.4
+        ],
+        "motion": [
+          0.46,
+          0.26
+        ]
+      },
+      "sample_rows": [
+        {
+          "label": 0,
+          "heart_rate": 72.08,
+          "spo2": 94.94,
+          "body_temp": 36.34,
+          "hr_var": 0.26,
+          "motion": 0.54
+        },
+        {
+          "label": 0,
+          "heart_rate": 81.63,
+          "spo2": 95.91,
+          "body_temp": 36.47,
+          "hr_var": 1.81,
+          "motion": 0.5
+        },
+        {
+          "label": 0,
+          "heart_rate": 62.56,
+          "spo2": 96.08,
+          "body_temp": 36.82,
+          "hr_var": 1.1,
+          "motion": 0.13
+        },
+        {
+          "label": 1,
+          "heart_rate": 49.1,
+          "spo2": 86.83,
+          "body_temp": 38.04,
+          "hr_var": 1.39,
+          "motion": 0.39
+        },
+        {
+          "label": 1,
+          "heart_rate": 131.46,
+          "spo2": 86.45,
+          "body_temp": 38.25,
+          "hr_var": 0.81,
+          "motion": 0.06
+        },
+        {
+          "label": 1,
+          "heart_rate": 48.0,
+          "spo2": 87.75,
+          "body_temp": 39.18,
+          "hr_var": 0.98,
+          "motion": 0.44
         }
       ]
     },
     {
       "node_id": 2,
-      "n_train": 277,
-      "n_test": 92,
-      "n_normal": 238,
-      "n_anomaly": 39,
-      "anomaly_ratio": 0.141,
+      "n_train": 315,
+      "n_test": 105,
+      "n_normal": 212,
+      "n_anomaly": 103,
+      "anomaly_ratio": 0.327,
       "stats_normal": {
         "heart_rate": [
-          75.85,
-          7.95
+          74.44,
+          8.31
         ],
         "spo2": [
-          96.92,
-          1.14
+          97.17,
+          1.13
         ],
         "body_temp": [
-          36.67,
-          0.32
+          36.72,
+          0.29
         ],
         "hr_var": [
-          0.77,
-          0.61
+          0.8,
+          0.57
         ],
         "motion": [
           0.51,
@@ -242,175 +242,175 @@
       },
       "stats_anomaly": {
         "heart_rate": [
-          95.73,
-          45.67
+          92.43,
+          46.04
         ],
         "spo2": [
-          89.39,
-          2.94
+          89.51,
+          3.01
         ],
         "body_temp": [
-          38.54,
-          0.47
+          38.57,
+          0.61
         ],
         "hr_var": [
-          2.2,
-          2.07
+          2.48,
+          1.95
         ],
         "motion": [
-          0.44,
+          0.47,
+          0.3
+        ]
+      },
+      "sample_rows": [
+        {
+          "label": 0,
+          "heart_rate": 74.18,
+          "spo2": 97.72,
+          "body_temp": 36.73,
+          "hr_var": 1.1,
+          "motion": 0.88
+        },
+        {
+          "label": 0,
+          "heart_rate": 60.2,
+          "spo2": 99.09,
+          "body_temp": 36.9,
+          "hr_var": 0.95,
+          "motion": 0.67
+        },
+        {
+          "label": 0,
+          "heart_rate": 75.22,
+          "spo2": 97.39,
+          "body_temp": 36.91,
+          "hr_var": 1.56,
+          "motion": 0.73
+        },
+        {
+          "label": 1,
+          "heart_rate": 133.45,
+          "spo2": 90.86,
+          "body_temp": 38.17,
+          "hr_var": 3.28,
+          "motion": 0.25
+        },
+        {
+          "label": 1,
+          "heart_rate": 140.65,
+          "spo2": 86.12,
+          "body_temp": 37.96,
+          "hr_var": 1.19,
+          "motion": 0.71
+        },
+        {
+          "label": 1,
+          "heart_rate": 52.85,
+          "spo2": 89.2,
+          "body_temp": 38.42,
+          "hr_var": 3.74,
+          "motion": 0.15
+        }
+      ]
+    },
+    {
+      "node_id": 3,
+      "n_train": 290,
+      "n_test": 97,
+      "n_normal": 169,
+      "n_anomaly": 121,
+      "anomaly_ratio": 0.417,
+      "stats_normal": {
+        "heart_rate": [
+          76.45,
+          7.9
+        ],
+        "spo2": [
+          97.05,
+          1.14
+        ],
+        "body_temp": [
+          36.71,
+          0.31
+        ],
+        "hr_var": [
+          0.77,
+          0.58
+        ],
+        "motion": [
+          0.51,
+          0.28
+        ]
+      },
+      "stats_anomaly": {
+        "heart_rate": [
+          84.65,
+          44.9
+        ],
+        "spo2": [
+          88.81,
+          2.89
+        ],
+        "body_temp": [
+          38.52,
+          0.59
+        ],
+        "hr_var": [
+          2.31,
+          1.72
+        ],
+        "motion": [
+          0.47,
           0.28
         ]
       },
       "sample_rows": [
         {
           "label": 0,
-          "heart_rate": 70.94,
-          "spo2": 98.82,
-          "body_temp": 36.16,
+          "heart_rate": 68.2,
+          "spo2": 96.84,
+          "body_temp": 36.35,
+          "hr_var": 0.21,
+          "motion": 0.78
+        },
+        {
+          "label": 0,
+          "heart_rate": 85.3,
+          "spo2": 96.95,
+          "body_temp": 36.6,
+          "hr_var": 0.26,
+          "motion": 0.7
+        },
+        {
+          "label": 0,
+          "heart_rate": 70.45,
+          "spo2": 96.18,
+          "body_temp": 36.84,
           "hr_var": 0.88,
-          "motion": 0.32
-        },
-        {
-          "label": 0,
-          "heart_rate": 93.72,
-          "spo2": 96.74,
-          "body_temp": 36.7,
-          "hr_var": 0.02,
-          "motion": 0.84
-        },
-        {
-          "label": 0,
-          "heart_rate": 73.26,
-          "spo2": 95.6,
-          "body_temp": 36.24,
-          "hr_var": 0.44,
-          "motion": 0.32
+          "motion": 0.36
         },
         {
           "label": 1,
-          "heart_rate": 140.1,
-          "spo2": 86.64,
-          "body_temp": 38.0,
-          "hr_var": 0.12,
-          "motion": 0.96
+          "heart_rate": 48.75,
+          "spo2": 88.32,
+          "body_temp": 38.9,
+          "hr_var": 0.06,
+          "motion": 0.59
         },
         {
           "label": 1,
-          "heart_rate": 123.36,
-          "spo2": 87.85,
-          "body_temp": 37.41,
-          "hr_var": 0.23,
-          "motion": 0.31
-        },
-        {
-          "label": 1,
-          "heart_rate": 123.73,
-          "spo2": 82.82,
-          "body_temp": 39.29,
-          "hr_var": 2.59,
-          "motion": 0.2
-        }
-      ]
-    },
-    {
-      "node_id": 3,
-      "n_train": 153,
-      "n_test": 51,
-      "n_normal": 138,
-      "n_anomaly": 15,
-      "anomaly_ratio": 0.098,
-      "stats_normal": {
-        "heart_rate": [
-          75.0,
-          7.63
-        ],
-        "spo2": [
-          96.86,
-          1.25
-        ],
-        "body_temp": [
-          36.68,
-          0.27
-        ],
-        "hr_var": [
-          0.75,
-          0.66
-        ],
-        "motion": [
-          0.51,
-          0.29
-        ]
-      },
-      "stats_anomaly": {
-        "heart_rate": [
-          76.68,
-          45.29
-        ],
-        "spo2": [
-          88.96,
-          2.93
-        ],
-        "body_temp": [
-          38.58,
-          0.59
-        ],
-        "hr_var": [
-          2.61,
-          1.99
-        ],
-        "motion": [
-          0.45,
-          0.25
-        ]
-      },
-      "sample_rows": [
-        {
-          "label": 0,
-          "heart_rate": 81.42,
-          "spo2": 97.68,
-          "body_temp": 36.23,
-          "hr_var": 0.19,
-          "motion": 0.69
-        },
-        {
-          "label": 0,
-          "heart_rate": 79.16,
-          "spo2": 96.79,
-          "body_temp": 36.71,
-          "hr_var": 0.25,
+          "heart_rate": 36.75,
+          "spo2": 90.85,
+          "body_temp": 39.01,
+          "hr_var": 2.24,
           "motion": 0.22
         },
         {
-          "label": 0,
-          "heart_rate": 73.04,
-          "spo2": 94.05,
-          "body_temp": 36.44,
-          "hr_var": 0.11,
-          "motion": 0.68
-        },
-        {
           "label": 1,
-          "heart_rate": 54.37,
-          "spo2": 93.53,
-          "body_temp": 38.35,
-          "hr_var": 0.12,
-          "motion": 0.25
-        },
-        {
-          "label": 1,
-          "heart_rate": 124.93,
-          "spo2": 86.94,
-          "body_temp": 38.52,
-          "hr_var": 1.11,
-          "motion": 0.29
-        },
-        {
-          "label": 1,
-          "heart_rate": 48.7,
-          "spo2": 93.38,
-          "body_temp": 38.03,
-          "hr_var": 0.19,
+          "heart_rate": 41.59,
+          "spo2": 90.95,
+          "body_temp": 38.07,
+          "hr_var": 2.2,
           "motion": 0.24
         }
       ]

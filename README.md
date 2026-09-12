@@ -35,6 +35,7 @@ chỉ giữ `bytes32` hash để truy vết & chống chối bỏ (đúng chiế
 | `ai_model/fedavg.py` | FedAvg có trọng số + hash keccak256 + lưu/đọc trọng số |
 | `scripts/web3_interface.py` | Cầu nối Web3.py ↔ smart contract |
 | `run_demo.py` | Orchestrator chạy nhiều round (có/không blockchain) |
+| `scripts/run_sweep.py` | Chạy lại toàn bộ FL trên nhiều lần chia dữ liệu (nhiều seed) → `results_sweep.json` |
 
 ## Yêu cầu
 
@@ -87,12 +88,21 @@ python dashboard/serve.py
 
 Trang `http://127.0.0.1:8000/dashboard/` tự mở, hiển thị real-time (làm mới mỗi 5 giây):
 
-- thẻ tổng quan: round hiện tại, số node, tổng BFL đã thưởng, accuracy mới nhất;
-- biểu đồ hội tụ accuracy / F1 qua từng round (đọc `results.json`);
-- bảng lịch sử round đọc thẳng từ smart contract (số node nộp Δw, tổng mẫu, global model hash);
-- bảng đóng góp & số dư token BFL từng node;
-- nhật ký sự kiện on-chain (`WeightsSubmitted`, `ModelAggregated`, `RewardDistributed`);
-- nút **Kết nối MetaMask** (xem số dư BFL của ví đang chọn).
+8 trang, mỗi trang một tầng / một câu hỏi:
+
+| Trang | Nội dung |
+|---|---|
+| **Tổng quan** | thẻ round hiện tại · số node · tổng BFL · accuracy; kết quả trước→sau FL; cấu hình thí nghiệm |
+| **Kiến trúc CPS** | sơ đồ 3 tầng IoT → AI → Blockchain, dữ liệu nào đi đâu, một round chạy qua những hàm nào (kèm đường dẫn file) |
+| **Dữ liệu IoT** | mức lệch dữ liệu giữa các node (non-IID) · thống kê + mẫu cảm biến từng node |
+| **Hội tụ AI** | hội tụ accuracy/F1 · **FedAvg so với từng node tự train** · đường loss (phát hiện overfit) · global model phục vụ từng node · cấu hình |
+| **Round on-chain** | lịch sử round đọc thẳng từ contract + **đối chứng hash file ↔ hash on-chain** |
+| **Token thưởng** | đóng góp & số dư BFL từng node |
+| **Nhật ký sự kiện** | toàn bộ sự kiện on-chain kèm số block + mã giao dịch |
+| **Smart Contract** | trạng thái sống của 2 contract · bảng phân quyền hàm · công thức chia thưởng tính lại từ dữ liệu on-chain |
+
+Ngoài ra: nút **Kết nối MetaMask** (xem số dư BFL của ví đang chọn), tự làm mới mỗi 5 giây.
+Đổi `--network sepolia` thì mã giao dịch trong nhật ký tự thành link Etherscan.
 
 Dashboard chỉ đọc RPC `http://127.0.0.1:8545` nên **không cần** MetaMask để xem;
 ví chỉ dùng cho phần trình diễn kết nối Web3 ở buổi demo.
@@ -115,6 +125,44 @@ python run_demo.py --network sepolia --rounds 3
 | `--epochs` | 5 | epoch huấn luyện cục bộ / round |
 | `--lr` | 0.05 | learning rate SGD |
 | `--no-chain` | off | chỉ chạy FL, bỏ qua blockchain |
+| `--seed` | 7 | seed chia dữ liệu — **đổi seed = một bộ dữ liệu cảm biến hoàn toàn khác** |
+
+## Kết quả có ổn định không? (nhiều lần chia dữ liệu)
+
+Một con số duy nhất trên một lần chia dữ liệu duy nhất không chứng minh được gì — nó
+có thể chỉ là một seed may mắn. Chạy lại toàn bộ quy trình trên nhiều bộ dữ liệu khác nhau:
+
+```bash
+python scripts/run_sweep.py                    # 10 seed mặc định, ~6 giây
+python scripts/run_sweep.py --seeds 1 2 3      # tự chọn seed
+```
+
+Kết quả đo được (10 lần chia dữ liệu × 5 round):
+
+| Chỉ số | Giá trị |
+|---|---|
+| Accuracy | **95.8% ± 1.8** (thấp nhất 92.5%, cao nhất 98.4%) |
+| F1 (lớp bất thường) | **94.2% ± 2.4** |
+| FedAvg thắng **mọi** node tự train | **10/10 lần** |
+| Cách biệt so với node tốt nhất | trung bình **+1.4 điểm %** |
+
+Ghi ra `results_sweep.json`, dashboard đọc và hiển thị ở trang **Hội tụ AI**. Sweep chạy
+`--no-chain` và **không** đụng tới `results.json` / trạng thái on-chain của lần chạy chính.
+
+> Lưu ý về tính tái lập: seed mặc định là 7 và được khoá cứng, nên chạy lại repo cho ra
+> **đúng** những con số trong báo cáo — kể cả hash keccak256 của global model.
+
+## Chạy demo trực tiếp từ dashboard
+
+Trang **Tổng quan** có nút **▶ Chạy demo từ đầu**: xoá sạch chain local → deploy lại 2
+contract → chạy Federated Learning, khoảng **10 giây**. Chọn được số round và seed ngay
+trên giao diện.
+
+Trong lúc chạy, mở trang **Round on-chain** hoặc **Nhật ký sự kiện** — dashboard đọc lại
+chuỗi mỗi 5 giây nên từng round và từng sự kiện hiện ra theo thời gian thực.
+
+Nút này cần dashboard mở qua `python dashboard/serve.py` (không phải mở thẳng file HTML),
+và hai endpoint điều khiển chỉ nhận kết nối từ máy cục bộ.
 
 ## Ánh xạ đề cương → mã nguồn
 
