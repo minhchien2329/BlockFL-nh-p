@@ -227,9 +227,48 @@ body.push(makeTable(
 body.push(caption("Bảng 1. Phân bố dữ liệu non-IID giữa 4 edge node (nguồn: data/nodes_preview.json)"));
 
 body.push(h2("3.2. Tầng AI (Federated Learning)"));
-body.push(p("Mô hình: mạng nơ-ron MLP 2 lớp ẩn (16 nơ-ron/lớp, kích hoạt ReLU), đầu vào 5 đặc trưng, đầu ra 2 lớp (bình thường/bất thường). Thuật toán tổng hợp là FedAvg (Federated Averaging – McMahan et al., 2017):"));
+
+body.push(h3("3.2.1. Kiến trúc mô hình"));
+body.push(p("Bài toán đặt ra là phân loại nhị phân (bình thường / bất thường) trên 5 đặc trưng số dạng bảng (heart_rate, spo2, body_temp, hr_var, motion) — không phải ảnh hay chuỗi thời gian dài, nên không cần đến CNN hay RNN/LSTM vốn nặng và khó hội tụ nhanh trong phạm vi vài round FedAvg. Nhóm chọn mạng nơ-ron truyền thẳng (MLP — VitalsMLP trong ai_model/model.py) gồm:"));
+[
+  "Lớp vào: 5 nơ-ron, tương ứng 5 đặc trưng cảm biến đã chuẩn hoá (z-score theo thống kê của tập train từng node).",
+  "2 lớp ẩn, mỗi lớp 16 nơ-ron, kích hoạt ReLU — đủ biểu diễn ranh giới phi tuyến giữa 2 lớp mà không dư thừa tham số (tổng cộng chỉ ~450 tham số/mô hình).",
+  "Lớp ra: 2 nơ-ron (logit cho 2 lớp), kết hợp hàm mất mát CrossEntropyLoss (tương đương softmax + negative log-likelihood).",
+].forEach((x) => body.push(bullet(x)));
+body.push(p("Chọn mô hình nhỏ là chủ đích: (1) FedAvg cần vài chục round là hội tụ trong giới hạn thời gian đồ án; (2) tham số càng ít thì Δw truyền giữa node và server (off-chain) càng nhẹ, phù hợp mô phỏng cho thiết bị biên tài nguyên hạn chế; (3) dễ debug và trực quan hoá kết quả khi thuyết trình."));
+
+body.push(h3("3.2.2. Huấn luyện cục bộ (local training)"));
+body.push(p("Ở mỗi round, mỗi node nhận global weights, khởi tạo lại mô hình với đúng bộ trọng số đó (không huấn luyện lại từ đầu), rồi huấn luyện tiếp trên dữ liệu riêng của mình với cấu hình:"));
+body.push(makeTable(
+  ["Siêu tham số", "Giá trị", "Vai trò"],
+  [
+    ["Optimizer", "SGD, momentum = 0.9", "Momentum giúp hội tụ nhanh hơn SGD thuần trên tập dữ liệu nhỏ mỗi node"],
+    ["Learning rate", "0.05", "Đủ lớn để hội tụ trong 5 epoch, nhưng không quá lớn gây dao động Δw giữa các node"],
+    ["Epoch cục bộ", "5", "Cân bằng giữa hội tụ cục bộ tốt và tránh overfit lên dữ liệu non-IID của riêng node"],
+    ["Batch size", "32", "Phù hợp với quy mô dữ liệu mỗi node (153–290 mẫu train)"],
+    ["Hàm mất mát", "CrossEntropyLoss", "Chuẩn cho bài toán phân loại đa lớp (ở đây là 2 lớp)"],
+  ],
+  [2350, 1800, 5200],
+));
+body.push(p("Sau khi huấn luyện xong, node chỉ gửi đi bộ trọng số mới (Δw dưới dạng vector phẳng, ghép từ toàn bộ tham số của mô hình) chứ không gửi gradient hay dữ liệu — đây chính là ranh giới bảo mật cốt lõi của Federated Learning."));
+
+body.push(h3("3.2.3. Tổng hợp FedAvg"));
+body.push(p("Thuật toán tổng hợp là FedAvg (Federated Averaging – McMahan et al., 2017), ý tưởng cốt lõi là lấy trung bình có trọng số các bộ tham số cục bộ, trọng số tỉ lệ với số mẫu mỗi node đóng góp:"));
 body.push(p("w_global = Σ (n_i / N) × w_i,  với n_i là số mẫu của node i, N = Σ n_i", { alignment: AlignmentType.CENTER }));
-body.push(p("Mỗi round: global weights được broadcast xuống từng node → node huấn luyện cục bộ 5 epoch bằng SGD (learning rate 0.05) → gửi Δw về → tính trung bình có trọng số theo số mẫu → cập nhật Global Model. Độ chính xác được đánh giá trên tập test gộp của tất cả node sau mỗi round để theo dõi hội tụ."));
+body.push(p("Cách chia trọng số theo n_i (thay vì chia đều 1/số node) đảm bảo công bằng thống kê: node có nhiều dữ liệu hơn (ví dụ node 1 với 368 mẫu) sẽ có ảnh hưởng lớn hơn tới mô hình chung so với node ít dữ liệu (node 0 với 226 mẫu) — đúng tinh thần \"đóng góp nhiều, ảnh hưởng nhiều\", đồng thời cũng là căn cứ để tầng Blockchain tính token thưởng theo đúng công thức tương tự (mục 3.3.2)."));
+body.push(p("Việc tính trung bình được thực hiện off-chain (trong ai_model/fedavg.py) vì: chi phí gas để nhân/cộng hàng trăm số thực dấu phẩy động ngay trên EVM là không cần thiết và tốn kém; EVM cũng không có kiểu dữ liệu số thực gốc. Sau khi tính xong, toàn bộ vector trọng số mới được băm bằng keccak256 thành 32 byte duy nhất, và chỉ giá trị hash này được ghi lên smart contract qua hàm aggregate() — chuỗi đóng vai trò trọng tài xác nhận \"phiên bản nào là bản chính thức\", không đóng vai trò máy tính."));
+
+body.push(h3("3.2.4. Vòng lặp huấn luyện và tiêu chí đánh giá"));
+[
+  "Bước 1 — Khởi tạo: Global Model khởi tạo ngẫu nhiên (round 0), dùng làm baseline so sánh.",
+  "Bước 2 — Broadcast: global weights hiện tại được gửi (giả lập, gọi hàm trực tiếp trong run_demo.py) xuống toàn bộ 4 node.",
+  "Bước 3 — Local training: mỗi node huấn luyện độc lập theo cấu hình ở mục 3.2.2.",
+  "Bước 4 — Submit: node băm Δw và gọi submitWeights() lên smart contract kèm số mẫu n_i.",
+  "Bước 5 — Aggregate: khi đủ 4/4 node đã nộp (minNodes = 3, có thể chốt sớm hơn), chạy FedAvg off-chain, ghi hash lên chain.",
+  "Bước 6 — Đánh giá: Global Model mới được chấm lại trên tập test gộp của toàn bộ 4 node (chưa từng thấy trong huấn luyện) để đo accuracy, F1 (lớp bất thường) và loss — đây chính là 3 chỉ số dùng để vẽ đường hội tụ ở Hình 2.",
+  "Bước 7 — Thưởng & lặp: hợp đồng phân phối token BFL theo tỉ lệ n_i, sau đó mở round tiếp theo (advanceRound()), quay lại Bước 2.",
+].forEach((x) => body.push(bullet(x)));
+body.push(p("Việc luôn đánh giá trên tập test gộp (không phải tập train) ở mọi round là điều kiện bắt buộc để đường cong ở Hình 2 phản ánh đúng khả năng tổng quát hoá của mô hình, chứ không phải hiện tượng học thuộc lòng dữ liệu cục bộ. Đây cũng là cơ sở cho phép so sánh trực tiếp accuracy của Global Model với accuracy của từng node tự huấn luyện riêng lẻ ở mục 5.2 — vì cả hai đều được chấm trên chính xác cùng một tập test."));
 
 body.push(h2("3.3. Tầng Blockchain (Smart Contract)"));
 body.push(p("Ngôn ngữ Solidity 0.8.24, phát triển và kiểm thử trên Hardhat local network. Hai smart contract:"));
