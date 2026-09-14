@@ -33,6 +33,7 @@ chỉ giữ `bytes32` hash để truy vết & chống chối bỏ (đúng chiế
 | `ai_model/model.py` | `VitalsMLP` (PyTorch) + tiện ích flatten/eval |
 | `ai_model/local_train.py` | Một bước cập nhật cục bộ (SGD, vài epoch) |
 | `ai_model/fedavg.py` | FedAvg có trọng số + hash keccak256 + lưu/đọc trọng số |
+| `ai_model/baseline_centralized.py` | Baseline **tập trung** (gom dữ liệu 4 node lại train 1 mô hình, không FL) → `results_baseline_centralized.json`, so sánh với FedAvg |
 | `scripts/web3_interface.py` | Cầu nối Web3.py ↔ smart contract |
 | `run_demo.py` | Orchestrator chạy nhiều round (có/không blockchain) |
 | `scripts/run_sweep.py` | Chạy lại toàn bộ FL trên nhiều lần chia dữ liệu (nhiều seed) → `results_sweep.json` |
@@ -126,6 +127,23 @@ python run_demo.py --network sepolia --rounds 3
 | `--lr` | 0.05 | learning rate SGD |
 | `--no-chain` | off | chỉ chạy FL, bỏ qua blockchain |
 | `--seed` | 7 | seed chia dữ liệu — **đổi seed = một bộ dữ liệu cảm biến hoàn toàn khác** |
+
+## So với train tập trung (không Federated Learning)
+
+FedAvg có đáng làm không, hay train tập trung (gom hết dữ liệu về 1 chỗ, bỏ qua riêng tư) vẫn tốt hơn? Chạy baseline tập trung trên cùng seed/tập test để so sánh trực tiếp:
+
+```bash
+python ai_model/baseline_centralized.py --seed 4 --epochs 25   # 25 = 5 round x 5 epoch, ngang epoch-tuong-duong voi FedAvg
+```
+
+Kết quả đo được (seed 4, cùng tập test với `results.json`):
+
+| | Accuracy | F1 (lớp bất thường) | Loss |
+|---|---|---|---|
+| Train tập trung (gom hết dữ liệu, không FL) | 99.0% | 98.3% | 0.023 |
+| FedAvg (5 round, non-IID) | 98.5% | 97.5% | 0.048 |
+
+FedAvg chỉ kém baseline tập trung khoảng **0.5 điểm % accuracy** — cái giá rất nhỏ phải trả để đổi lấy việc dữ liệu bệnh nhân **không bao giờ rời khỏi node**.
 
 ## Kết quả có ổn định không? (nhiều lần chia dữ liệu)
 
