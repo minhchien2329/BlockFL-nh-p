@@ -4,6 +4,7 @@ cache/
 deployments/
 results.json
 hardhat-node.log
+dashboard-serve.log
 .env
 __pycache__/
 *.pyc
