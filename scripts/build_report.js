@@ -161,7 +161,7 @@ sections.push({
     p([t("Học phần: ", { bold: true }), t("Cơ sở Blockchain và Ứng dụng")], { alignment: AlignmentType.CENTER }),
     p([t("GVHD: ", { bold: true }), t("Huỳnh Thế Thiện")], { alignment: AlignmentType.CENTER }),
     p([t("Nhóm thực hiện: ", { bold: true }), t("[Điền tên nhóm]")], { alignment: AlignmentType.CENTER }),
-    p([t("Mã nguồn: ", { bold: true }), t("[Điền link GitHub repository]")], { alignment: AlignmentType.CENTER }),
+    p([t("Mã nguồn: ", { bold: true }), t("https://github.com/minhchien2329/BlockFL")], { alignment: AlignmentType.CENTER }),
     ...Array(2).fill(0).map(() => p("")),
     makeTable(
       ["STT", "Họ tên – MSSV", "Vai trò"],
@@ -389,7 +389,7 @@ body.push(p("Mã nguồn được tổ chức theo đúng cấu trúc thư mục
   "dashboard/ — 8 trang giám sát thời gian thực (HTML/CSS/JS + Ethers.js).",
   "run_demo.py — script điều phối chạy toàn bộ pipeline end-to-end.",
 ].forEach((x) => body.push(bullet(x)));
-body.push(p("Repository công khai (Public) trên GitHub, link: [Điền link GitHub repository]."));
+body.push(p("Repository công khai (Public) trên GitHub, link: https://github.com/minhchien2329/BlockFL."));
 
 body.push(h1("9. Phân công nhiệm vụ"));
 body.push(p("Đề cương ban đầu phân công 5 vai trò như sau (điền cụ thể tên/MSSV từng thành viên trước khi nộp):"));
